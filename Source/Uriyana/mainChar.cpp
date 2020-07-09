@@ -83,10 +83,10 @@ void AmainChar::shoot() {
 			actor->SetActorScale3D(FVector(0.5f, 0.5f, 0.5f));
 			
 			FVector forceToBall = Dir;
-			forceToBall.X *= 400000.0;
-			forceToBall.Y *= 400000.0;
-			forceToBall.Z *= 400000.0;
-			actor->getMesh()->AddForce(forceToBall, NAME_None, true);
+			forceToBall.X *= 5000;
+			forceToBall.Y *= 5000;
+			forceToBall.Z *= 5000;
+			actor->getMesh()->AddImpulse(forceToBall, NAME_None, true);
 		}
 	}
 
