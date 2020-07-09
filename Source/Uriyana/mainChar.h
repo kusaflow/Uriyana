@@ -18,6 +18,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
 
+	UPROPERTY(EditDefaultsOnly, category = "meshes")
+	TSubclassOf<class AThrowBall> ball;
+
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -31,6 +35,10 @@ public:
 
 	void MoveForword();
 
-	void touch();
+	void shoot();
+
+	void XAxis(float val);
+
+	void YAxis(float val);
 
 };

@@ -5,6 +5,12 @@
 #include "Camera/CameraComponent.h"
 #include "Math/UnrealMathUtility.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "GameFramework/PlayerController.h"
+#include "Kismet/GameplayStatics.h"
+#include "ThrowBall.h"
+#include "Engine/World.h"
+#include "Components/PrimitiveComponent.h"
 
 // Sets default values
 AmainChar::AmainChar()
@@ -40,7 +46,7 @@ void AmainChar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAction("shoot", IE_Pressed, this, &AmainChar::touch);
+	PlayerInputComponent->BindAction("shoot", IE_Pressed, this, &AmainChar::shoot);
 }
 
 
@@ -56,8 +62,36 @@ void AmainChar :: MoveForword() {
 }
 
 
-void AmainChar::touch() {
-	UE_LOG(LogTemp, Warning, TEXT("===============================================================c"));
+void AmainChar::shoot() {
+	
+	APlayerController* playCtrl = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+
+	FVector Dir, loc;
+	playCtrl->DeprojectMousePositionToWorld(loc, Dir);
+
+
+	FVector FinalVec = FVector(loc.X + (Dir.X*100), loc.Y + (Dir.Y*100), loc.Z + (Dir.Z*100));
+
+	AThrowBall* actor;
+	FActorSpawnParameters spawnPara;
+	spawnPara.Owner = this;
+
+	if (ball) {
+		UWorld* world = GetWorld();
+		if (world) {
+			actor = world->SpawnActor<AThrowBall>(ball, FinalVec, FRotator(0), spawnPara);
+			actor->SetActorScale3D(FVector(0.5f, 0.5f, 0.5f));
+			
+			FVector forceToBall = Dir;
+			forceToBall.X *= 400000.0;
+			forceToBall.Y *= 400000.0;
+			forceToBall.Z *= 400000.0;
+			actor->getMesh()->AddForce(forceToBall, NAME_None, true);
+		}
+	}
+
+
+
 
 
 }

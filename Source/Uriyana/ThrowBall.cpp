@@ -1,0 +1,41 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "ThrowBall.h"
+#include "Components/StaticMeshComponent.h"
+
+// Sets default values
+AThrowBall::AThrowBall()
+{
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
+	ball = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ball"));
+	RootComponent = ball;
+}
+
+// Called when the game starts or when spawned
+void AThrowBall::BeginPlay()
+{
+	Super::BeginPlay();
+	timer = 0;
+	
+}
+
+// Called every frame
+void AThrowBall::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (timer >= 120) {
+		Destroy();
+	}
+	else {
+		timer += 60 * DeltaTime;
+	}
+
+}
+
+UStaticMeshComponent* AThrowBall :: getMesh() {
+	return ball;
+}
