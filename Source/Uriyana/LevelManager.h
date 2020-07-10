@@ -14,10 +14,10 @@ class URIYANA_API ALevelManager : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ALevelManager();
+	~ALevelManager();
 
-	TArray<TArray<AActor*>> LB_array;
-
-	TArray<AActor*> L_actors;
+	
+	TQueue<TArray<AActor*>> LB_array;
 
 	float next_Milestone;
 
@@ -40,5 +40,7 @@ public:
 	void initBlocks();
 
 	void CreateLevelBlock();
+
+	void popBlock();
 
 };

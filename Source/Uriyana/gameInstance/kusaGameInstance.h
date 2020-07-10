@@ -13,5 +13,7 @@ UCLASS()
 class URIYANA_API UkusaGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
+public:
+	float playerXpos = 0;
 	
 };

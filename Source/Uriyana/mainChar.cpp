@@ -11,6 +11,7 @@
 #include "ThrowBall.h"
 #include "Engine/World.h"
 #include "Components/PrimitiveComponent.h"
+#include "gameInstance/kusaGameInstance.h"
 
 // Sets default values
 AmainChar::AmainChar()
@@ -37,7 +38,11 @@ void AmainChar::BeginPlay()
 void AmainChar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	//MoveForword();
+	MoveForword();
+
+	UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
+	gameInst->playerXpos = GetRootComponent()->GetComponentLocation().X;
+	
 
 }
 
