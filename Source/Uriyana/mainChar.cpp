@@ -37,7 +37,7 @@ void AmainChar::BeginPlay()
 void AmainChar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	MoveForword();
+	//MoveForword();
 
 }
 
@@ -80,12 +80,12 @@ void AmainChar::shoot() {
 		UWorld* world = GetWorld();
 		if (world) {
 			actor = world->SpawnActor<AThrowBall>(ball, FinalVec, FRotator(0), spawnPara);
-			actor->SetActorScale3D(FVector(0.5f, 0.5f, 0.5f));
+			actor->SetActorScale3D(FVector(0.4f, 0.4f, 0.4f));
 			
 			FVector forceToBall = Dir;
-			forceToBall.X *= 5000;
-			forceToBall.Y *= 5000;
-			forceToBall.Z *= 5000;
+			forceToBall.X *= 4300;
+			forceToBall.Y *= 4300;
+			forceToBall.Z *= 4300;
 			actor->getMesh()->AddImpulse(forceToBall, NAME_None, true);
 		}
 	}
