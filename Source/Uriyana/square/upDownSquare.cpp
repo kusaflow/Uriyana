@@ -2,6 +2,7 @@
 
 
 #include "upDownSquare.h"
+#include "Math/UnrealMathUtility.h"
 
 // Sets default values
 AupDownSquare::AupDownSquare()
@@ -23,7 +24,9 @@ AupDownSquare::AupDownSquare()
 void AupDownSquare::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	upLimit = FMath::FRandRange(20, 200);
+	downLimit = FMath::FRandRange(20, 200);
+	speed = FMath::FRandRange(50, 500);
 }
 
 // Called every frame

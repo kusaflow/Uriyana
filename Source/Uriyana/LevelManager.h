@@ -21,10 +21,36 @@ public:
 
 	float next_Milestone;
 
+
+	UPROPERTY(EditDefaultsOnly, category = "WalkPAth")
+	TSubclassOf<class AActor> walkPath;
+
 	UPROPERTY(EditDefaultsOnly, category = "Square")
-	TSubclassOf<class AActor> levelBlock;
+	TSubclassOf<class AActor> sq_upDown;
+
+	UPROPERTY(EditDefaultsOnly, category = "Square")
+	TSubclassOf<class AActor> sq_floor;
+
 
 	int64 xpos;
+
+	int lvl_G =1;
+	/* 
+	lvl_G ----------  includes
+	1				 square / circle / triangle
+
+	*/
+	int lvl_T = 1;
+	/*
+	lvl_G
+	1
+		lvl_T		type
+		1			square
+		2			cicle
+		3			triagle
+	================================================================
+
+	*/
 
 
 protected:

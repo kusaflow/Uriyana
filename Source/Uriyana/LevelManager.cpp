@@ -6,6 +6,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
 #include "gameInstance/kusaGameInstance.h"
+#include "square/upDownSquare.h"
+#include "Math/UnrealMathUtility.h"
 
 
 // Sets default values
@@ -14,7 +16,7 @@ ALevelManager::ALevelManager()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	xpos = 0;
+	xpos = -50000;
 
 }
 
@@ -60,13 +62,16 @@ void ALevelManager :: UpdateLevel() {
 }
 
 void ALevelManager :: popBlock() {
-	TArray<AActor*> *rem = LB_array.Peek();
+	if (LB_array.IsEmpty()) {
+		return;
+	}
+	TArray<AActor*> rem;
+	LB_array.Peek(rem);
 	LB_array.Pop();
-
-	//UE_LOG(LogTemp, Warning, TEXT("%d"), rem->Num());
-	while (rem->Num() != 0) {
-		//rem->Pop()->Destroy();
-
+	
+	UE_LOG(LogTemp, Warning, TEXT("%d"), rem.Num());
+	while (rem.Num() != 0) {
+		rem.Pop()->Destroy();
 	}
 
 
@@ -74,7 +79,7 @@ void ALevelManager :: popBlock() {
 
 void ALevelManager::initBlocks() {
 	
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 10; i++) {
 		CreateLevelBlock();
 		//UE_LOG(LogTemp, Warning, TEXT("down"));
 		if (i == 2) {
@@ -91,14 +96,57 @@ void ALevelManager::CreateLevelBlock() {
 
 	UWorld* world = GetWorld();
 	if (world) {
-		AActor* sp = world->SpawnActor<AActor>(levelBlock, FVector(xpos, 0, 0), FRotator(0), spawnPara);
-		xpos += 1000;
-		blocks.Push(sp);
-		blocks.Push(sp);
+
+		if (walkPath) {
+			AActor* sp = world->SpawnActor<AActor>(walkPath, FVector(xpos, 0, 200), FRotator(0), spawnPara);
+			blocks.Push(sp);
+		}
+
+		//Area Square
+		if (lvl_G == 1) {
+			//manage square circle triangle 
+			if (lvl_T == 1) {
+				//manage sqaure
+				
+				//floor
+				if (sq_floor) {
+					AActor* floor = world->SpawnActor<AActor>(sq_floor, FVector(xpos, 0, -200), FRotator(0), spawnPara);
+					blocks.Push(floor);
+				}
+				int drawpos = xpos;
+				//random number
+				for (int i = 0; i < 4; i++) {
+					int ypos = (int)FMath::FRandRange(-300, -1000);
+					int inc = (int)(ypos / 2);
+					inc *= -1;
+					for (int j = 0; j < 5; j++) {
+						if (sq_upDown) {
+							AActor* a1 = world->SpawnActor<AActor>(sq_upDown, FVector(drawpos, ypos, 0), FRotator(0), spawnPara);
+							blocks.Push(a1);
+						}
+						ypos += inc;
+					}
+					drawpos += 250;
+				}
+
+
+			}
+		}
+
+
+		
+
+
+
+
+
+		//Area Sqare End
+
 		//UE_LOG(LogTemp, Warning, TEXT("down"));
 
 	}
-	UE_LOG(LogTemp, Warning, TEXT("%d"), blocks.Num());
+	xpos += 1000;
+	//UE_LOG(LogTemp, Warning, TEXT("%d"), blocks.Num());
 	LB_array.Enqueue(blocks);
 }
 
