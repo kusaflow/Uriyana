@@ -19,6 +19,7 @@ public:
 	
 	TQueue<TArray<AActor*>> LB_array;
 
+	UPROPERTY(BlueprintReadOnly, Category= "kusavar")
 	float next_Milestone;
 
 
@@ -60,6 +61,10 @@ public:
 
 	*/
 
+	int breakPoint = 10;
+	int PrefObj;
+
+	bool prevIsBreak = false;
 
 protected:
 	// Called when the game starts or when spawned

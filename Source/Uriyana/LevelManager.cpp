@@ -55,10 +55,14 @@ void ALevelManager::Tick(float DeltaTime)
 
 
 void ALevelManager :: UpdateLevel() {
-	CreateLevelBlock();
 
-	next_Milestone += 1000;
-	
+	if (breakPoint > 0) {
+		next_Milestone += 1000;
+	}
+	else {
+		next_Milestone += 2000;
+	}
+	CreateLevelBlock();
 	popBlock();
 	
 }
@@ -100,217 +104,271 @@ void ALevelManager::CreateLevelBlock() {
 
 	UWorld* world = GetWorld();
 	if (world) {
-
-		if (walkPath) {
-			AActor* sp = world->SpawnActor<AActor>(walkPath, FVector(xpos, 0, 200), FRotator(0), spawnPara);
-			blocks.Push(sp);
-		}
-
 		//Area Square
-		if (lvl_G == 1) {
-			//manage square circle triangle 
-			if (lvl_T == 1) {
-				//manage sqaure
-				
-				//floor
-				if (sq_floor) {
-					AActor* floor = world->SpawnActor<AActor>(sq_floor, FVector(xpos, 0, -200), FRotator(0), spawnPara);
-					blocks.Push(floor);
-				}
+		if (breakPoint > 0) {
+			if (prevIsBreak)
+				xpos -= 500;
 
+			if (walkPath) {
+				AActor* sp = world->SpawnActor<AActor>(walkPath, FVector(xpos, 0, 200), FRotator(0), spawnPara);
+				blocks.Push(sp);
+			}
 
-				WhatToSelect = (int)FMath::FRandRange(1, 8);
+			if (lvl_G == 1) {
+				//manage square circle triangle 
+				if (lvl_T == 1) {
+					//manage sqaure
 
-
-				if (WhatToSelect == 1) {
-					int drawpos = xpos;
-					//random number
-					for (int i = 0; i < 4; i++) {
-						//updown
-						int ypos = (int)FMath::FRandRange(-300, -1000);
-						int inc = (int)(ypos / 2);
-						inc *= -1;
-						for (int j = 0; j < 5; j++) {
-							if (sq_upDown) {
-								AActor* a1 = world->SpawnActor<AActor>(sq_upDown, FVector(drawpos, ypos, 0), FRotator(0), spawnPara);
-								blocks.Push(a1);
-							}
-							ypos += inc;
-						}
-						drawpos += 250;
+					//floor
+					if (sq_floor) {
+						AActor* floor = world->SpawnActor<AActor>(sq_floor, FVector(xpos, 0, -200), FRotator(0), spawnPara);
+						floor->SetActorScale3D(FVector(5, 10, .5f));
+						blocks.Push(floor);
 					}
-				}
-				else if (WhatToSelect == 2) {
-					//rotating
-					int drawpos = xpos+500;
-					bool rx, ry, rz;
-					//random number
-					for (int i = 0; i < 1; i++) {
-						//updown
-						int ypos = FMath::FRandRange(-1000, -600);
-						int inc = (int)(ypos / 2);
-						inc *= -1;
-						rx = ry = rz = false;
-						if ((int)FMath::FRandRange(0, 500) % 2 == 0) {
-							rx = true;
+
+
+					WhatToSelect = (int)FMath::FRandRange(1, 8);
+
+
+					if (WhatToSelect == 1) {
+						int drawpos = xpos;
+						//random number
+						for (int i = 0; i < 4; i++) {
+							//updown
+							int ypos = (int)FMath::FRandRange(-300, -1000);
+							int inc = (int)(ypos / 2);
+							inc *= -1;
+							for (int j = 0; j < 5; j++) {
+								if (sq_upDown) {
+									AActor* a1 = world->SpawnActor<AActor>(sq_upDown, FVector(drawpos, ypos, 0), FRotator(0), spawnPara);
+									blocks.Push(a1);
+								}
+								ypos += inc;
+							}
+							drawpos += 250;
 						}
+					}
+					else if (WhatToSelect == 2) {
+						//rotating
+						int drawpos = xpos + 500;
+						bool rx, ry, rz;
+						//random number
+						for (int i = 0; i < 1; i++) {
+							//updown
+							int ypos = FMath::FRandRange(-1000, -600);
+							int inc = (int)(ypos / 2);
+							inc *= -1;
+							rx = ry = rz = false;
+							if ((int)FMath::FRandRange(0, 500) % 2 == 0) {
+								rx = true;
+							}
+							if ((int)FMath::FRandRange(0, 500) % 2 == 0) {
+								rz = true;
+							}
+							ry = true;
+
+							float speed = FMath::FRandRange(100, 200);
+
+							for (int j = 0; j < 5; j++) {
+								if (sq_rot) {
+									ASquare_rot* a1 = world->SpawnActor<ASquare_rot>(sq_rot, FVector(drawpos, ypos + 200, 0), FRotator(0), spawnPara);
+									a1->SetRotSetUp(rx, ry, rz, speed);
+									blocks.Push(a1);
+
+								}
+								ypos += inc;
+							}
+							drawpos += 500;
+						}
+
+					}
+					else if (WhatToSelect == 3) {
+						int drawpos = xpos + 500;
+						//random number
+						for (int i = 0; i < 1; i++) {
+							//updown
+							int ypos = (int)FMath::FRandRange(-300, -1000);
+							int inc = (int)(ypos / 2);
+							inc *= -1;
+							for (int j = 0; j < 5; j++) {
+								if (sq_upDown) {
+									AActor* a1 = world->SpawnActor<AActor>(sq_upDown, FVector(drawpos, ypos, 0), FRotator(0), spawnPara);
+									blocks.Push(a1);
+								}
+								ypos += inc;
+							}
+							drawpos += 500;
+						}
+					}
+					else if (WhatToSelect == 4) {
+						int drawpos = xpos;
+						//random number
+						for (int i = 0; i < 3; i++) {
+							//updown
+							int ypos = (int)FMath::FRandRange(-300, -1000);
+							int inc = (int)(ypos / 2);
+							inc *= -1;
+							for (int j = 0; j < 5; j++) {
+								if (sq_upDown) {
+									AActor* a1 = world->SpawnActor<AActor>(sq_upDown, FVector(drawpos, ypos, 0), FRotator(0), spawnPara);
+									blocks.Push(a1);
+								}
+								ypos += inc;
+							}
+							drawpos += 330;
+						}
+					}
+					else if (WhatToSelect == 5) {
+						//rotating
+						int drawpos = xpos;
+						bool rx, ry, rz;
+						//random number
+						for (int i = 0; i < 3; i++) {
+							//updown
+							int ypos = FMath::FRandRange(-1000, -600);
+							int inc = (int)(ypos / 2);
+							inc *= -1;
+							rx = ry = rz = false;
+							if ((int)FMath::FRandRange(0, 500) % 2 == 0) {
+								rx = true;
+							}
+							if ((int)FMath::FRandRange(0, 500) % 2 == 0) {
+								rz = true;
+							}
+							ry = true;
+
+							float speed = FMath::FRandRange(100, 200);
+
+							for (int j = 0; j < 5; j++) {
+								if (sq_rot) {
+									ASquare_rot* a1 = world->SpawnActor<ASquare_rot>(sq_rot, FVector(drawpos, ypos + 200, 0), FRotator(0), spawnPara);
+									a1->SetRotSetUp(rx, ry, rz, speed);
+									blocks.Push(a1);
+
+								}
+								ypos += inc;
+							}
+							drawpos += 330;
+						}
+
+					}
+					else if (WhatToSelect == 6) {
+						//rotating
+
+						bool rx, ry, rz;
+
+						rx = ry = rz = false;
 						if ((int)FMath::FRandRange(0, 500) % 2 == 0) {
 							rz = true;
 						}
-						ry = true;
-						
-						float speed = FMath::FRandRange(100, 200);
-
-						for (int j = 0; j < 5; j++) {
-							if (sq_rot) {
-								ASquare_rot* a1 = world->SpawnActor<ASquare_rot>(sq_rot, FVector(drawpos, ypos+200, 0), FRotator(0), spawnPara);
-								a1->SetRotSetUp(rx, ry, rz, speed);
-								blocks.Push(a1);
-
-							}
-							ypos += inc;
-						}
-						drawpos += 500;
-					}
-
-				}
-				else if (WhatToSelect == 3) {
-					int drawpos = xpos+500;
-					//random number
-					for (int i = 0; i < 1; i++) {
-						//updown
-						int ypos = (int)FMath::FRandRange(-300, -1000);
-						int inc = (int)(ypos / 2);
-						inc *= -1;
-						for (int j = 0; j < 5; j++) {
-							if (sq_upDown) {
-								AActor* a1 = world->SpawnActor<AActor>(sq_upDown, FVector(drawpos, ypos, 0), FRotator(0), spawnPara);
-								blocks.Push(a1);
-							}
-							ypos += inc;
-						}
-						drawpos += 500;
-					}
-				}
-				else if (WhatToSelect == 4) {
-					int drawpos = xpos;
-					//random number
-					for (int i = 0; i < 3; i++) {
-						//updown
-						int ypos = (int)FMath::FRandRange(-300, -1000);
-						int inc = (int)(ypos / 2);
-						inc *= -1;
-						for (int j = 0; j < 5; j++) {
-							if (sq_upDown) {
-								AActor* a1 = world->SpawnActor<AActor>(sq_upDown, FVector(drawpos, ypos, 0), FRotator(0), spawnPara);
-								blocks.Push(a1);
-							}
-							ypos += inc;
-						}
-						drawpos += 330;
-					}
-				}
-				else if (WhatToSelect == 5) {
-					//rotating
-					int drawpos = xpos;
-					bool rx, ry, rz;
-					//random number
-					for (int i = 0; i < 3; i++) {
-						//updown
-						int ypos = FMath::FRandRange(-1000, -600);
-						int inc = (int)(ypos / 2);
-						inc *= -1;
-						rx = ry = rz = false;
 						if ((int)FMath::FRandRange(0, 500) % 2 == 0) {
-							rx = true;
+							ry = true;
 						}
+						rx = true;
+
+						int ypos = -500;
+
+						float speed = FMath::FRandRange(1, 4);
+						for (int i = 0; i < 3; i++) {
+							if (sq_Size) {
+								ASquare_size* a1 = world->SpawnActor<ASquare_size>(sq_Size, FVector(xpos + 500, ypos, 0), FRotator(0), spawnPara);
+								a1->SizeSetUp(rx, ry, rz, speed, 3);
+								blocks.Push(a1);
+
+							}
+							ypos += 500;
+						}
+					}
+					else if (WhatToSelect == 7) {
+
+						bool rx, ry, rz;
+
+						rx = ry = rz = false;
 						if ((int)FMath::FRandRange(0, 500) % 2 == 0) {
 							rz = true;
 						}
-						ry = true;
-
-						float speed = FMath::FRandRange(100, 200);
-
-						for (int j = 0; j < 5; j++) {
-							if (sq_rot) {
-								ASquare_rot* a1 = world->SpawnActor<ASquare_rot>(sq_rot, FVector(drawpos, ypos + 200, 0), FRotator(0), spawnPara);
-								a1->SetRotSetUp(rx, ry, rz, speed);
-								blocks.Push(a1);
-
-							}
-							ypos += inc;
+						if ((int)FMath::FRandRange(0, 500) % 2 == 0) {
+							ry = true;
 						}
-						drawpos += 330;
-					}
-
-				}
-				else if (WhatToSelect == 6) {
-					//rotating
-					
-					bool rx, ry, rz;
-
-					rx = ry = rz = false;
-					if ((int)FMath::FRandRange(0, 500) % 2 == 0) {
-						rz = true;
-					}
-					if ((int)FMath::FRandRange(0, 500) % 2 == 0) {
-						ry = true;
-					}
-					rx = true;
-
-					int ypos = -500;
-
-					float speed = FMath::FRandRange(1, 4);
-					for (int i = 0; i < 3; i++) {
-						if (sq_Size) {
-							ASquare_size* a1 = world->SpawnActor<ASquare_size>(sq_Size, FVector(xpos + 500, ypos, 0), FRotator(0), spawnPara);
-							a1->SizeSetUp(rx, ry, rz, speed, 3);
-							blocks.Push(a1);
-
-						}
-						ypos += 500;
-					}
-				}
-				else if (WhatToSelect == 7) {
-				
-					bool rx, ry, rz;
-
-					rx = ry = rz = false;
-					if ((int)FMath::FRandRange(0, 500) % 2 == 0) {
-						rz = true;
-					}
-					if ((int)FMath::FRandRange(0, 500) % 2 == 0) {
-						ry = true;
-					}
-					rx = true;
+						rx = true;
 
 
-					float speed = FMath::FRandRange(1, 4);
-				
+						float speed = FMath::FRandRange(1, 4);
+
 						if (sq_Size) {
 							ASquare_size* a1 = world->SpawnActor<ASquare_size>(sq_Size, FVector(xpos + 500, 0, 0), FRotator(0), spawnPara);
 							a1->SizeSetUp(rx, ry, rz, speed, 3);
 							blocks.Push(a1);
 
 						}
-				
+
+					}
 				}
 			}
+
+			xpos += 1000;
+			breakPoint--;
+
+			prevIsBreak = false;
 		}
+		//----------------------------------------------------------------------------------------------------------------
+		else {
+			
+			breakPoint = (int)FMath::FRandRange(0, 10);
+			
+			if (!prevIsBreak) {
+				xpos += 500;
+			}
+			
+			if (walkPath) {
+				AActor* sp = world->SpawnActor<AActor>(walkPath, FVector(xpos, 0, 200), FRotator(0), spawnPara);
+				sp->SetActorScale3D(FVector(10, 5, 0.5f));
+				blocks.Push(sp);
+			}
+
+			if (lvl_G == 1) {
+				//manage square circle triangle 
+				if (lvl_T == 1) {
+					//square
+					//WhatToSelect = (int)FMath::FRandRange(1, 8);
+
+					if (sq_floor) {
+						AActor* floor = world->SpawnActor<AActor>(sq_floor, FVector(xpos, 0, -200), FRotator(0), spawnPara);
+						floor->SetActorScale3D(FVector(10, 10, .5f));
+						blocks.Push(floor);
+					}
+
+					WhatToSelect = 2;
+
+					if (WhatToSelect == 1) {
+						if (sq_floor) {
+							AActor* aa = world->SpawnActor<AActor>(sq_floor, FVector(xpos, 0, 0), FRotator(0), spawnPara);
+							aa->SetActorScale3D(FVector(1, 7, FMath::FRandRange(1, 1.5f)));
+							blocks.Push(aa);
+						}
+					}
+					else if (WhatToSelect == 2) {
+						if (sq_floor) {
+							AActor* aa = world->SpawnActor<AActor>(sq_floor, FVector(xpos, 0, 0), FRotator(0), spawnPara);
+							aa->SetActorScale3D(FVector(5, 7, FMath::FRandRange(1, 1.5f)));
+							blocks.Push(aa);
+						}
+					}
+					
+				}
 
 
-		
+			}
 
+			xpos += 2000;
+			prevIsBreak = true;
 
-
-
-
+			//UE_LOG(LogTemp, Warning, TEXT("down"));
+		}
 		//Area Sqare End
 
-		//UE_LOG(LogTemp, Warning, TEXT("down"));
 
 	}
-	xpos += 1000;
 	//UE_LOG(LogTemp, Warning, TEXT("%d"), blocks.Num());
 	LB_array.Enqueue(blocks);
 }
