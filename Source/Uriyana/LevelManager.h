@@ -25,11 +25,19 @@ public:
 	UPROPERTY(EditDefaultsOnly, category = "WalkPAth")
 	TSubclassOf<class AActor> walkPath;
 
+
+	//square=====================================================================
 	UPROPERTY(EditDefaultsOnly, category = "Square")
 	TSubclassOf<class AActor> sq_upDown;
 
 	UPROPERTY(EditDefaultsOnly, category = "Square")
 	TSubclassOf<class AActor> sq_floor;
+
+	UPROPERTY(EditDefaultsOnly, category = "Square")
+	TSubclassOf<class ASquare_rot> sq_rot;
+
+	UPROPERTY(EditDefaultsOnly, category = "Square")
+	TSubclassOf<class ASquare_size> sq_Size;
 
 
 	int64 xpos;
