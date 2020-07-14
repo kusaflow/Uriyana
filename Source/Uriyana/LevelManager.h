@@ -40,6 +40,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, category = "Square")
 	TSubclassOf<class ASquare_size> sq_Size;
 
+	UPROPERTY(EditDefaultsOnly, category = "Square")
+	TSubclassOf<class ASquare_BigRot> sq_Big_Rot;
+
 
 	int64 xpos;
 

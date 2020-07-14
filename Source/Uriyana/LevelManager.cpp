@@ -10,6 +10,7 @@
 #include "Math/UnrealMathUtility.h"
 #include "square/Square_rot.h"
 #include "square/Square_size.h"
+#include "square/Square_BigRot.h"
 
 
 // Sets default values
@@ -85,7 +86,7 @@ void ALevelManager :: popBlock() {
 
 void ALevelManager::initBlocks() {
 	
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 20; i++) {
 		CreateLevelBlock();
 		//UE_LOG(LogTemp, Warning, TEXT("down"));
 		if (i == 2) {
@@ -338,22 +339,24 @@ void ALevelManager::CreateLevelBlock() {
 						blocks.Push(floor);
 					}
 
-					WhatToSelect = 2;
+					WhatToSelect = 1;
 
 					if (WhatToSelect == 1) {
 						if (sq_floor) {
 							AActor* aa = world->SpawnActor<AActor>(sq_floor, FVector(xpos, 0, 0), FRotator(0), spawnPara);
-							aa->SetActorScale3D(FVector(1, 7, FMath::FRandRange(1, 1.5f)));
+							aa->SetActorScale3D(FVector(FMath::FRandRange(1, 5), 7, FMath::FRandRange(1.2f, 1.7f)));
 							blocks.Push(aa);
 						}
 					}
-					else if (WhatToSelect == 2) {
-						if (sq_floor) {
-							AActor* aa = world->SpawnActor<AActor>(sq_floor, FVector(xpos, 0, 0), FRotator(0), spawnPara);
-							aa->SetActorScale3D(FVector(5, 7, FMath::FRandRange(1, 1.5f)));
-							blocks.Push(aa);
-						}
+
+					if ((int)(FMath::FRandRange(0, 50)) % 2 == 0) {
+						
 					}
+					if (sq_Big_Rot) {
+						AActor* aa = world->SpawnActor<AActor>(sq_Big_Rot, FVector(xpos, 0, 0), FRotator(0), spawnPara);
+						blocks.Push(aa);
+					}
+					
 					
 				}
 
