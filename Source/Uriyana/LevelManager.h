@@ -26,6 +26,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, category = "WalkPAth")
 	TSubclassOf<class AActor> walkPath;
 
+	UPROPERTY(EditDefaultsOnly, category = "WalkPAth")
+	TSubclassOf<class AActor> walls;
 
 	//square=====================================================================
 	UPROPERTY(EditDefaultsOnly, category = "Square")
@@ -42,6 +44,22 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, category = "Square")
 	TSubclassOf<class ASquare_BigRot> sq_Big_Rot;
+
+	UPROPERTY(EditDefaultsOnly, category = "Square")
+	TSubclassOf<class Asq_floor> sq_floor_pro;
+
+//===========================================triangle=================================================
+	UPROPERTY(EditDefaultsOnly, category = "Triangle")
+	TSubclassOf<class ATriangle_floor> tri_floor;
+
+
+	int Theme;
+	int Theme_Duration;
+	int floorType;
+	int floorType_Duration;
+	int wallType;
+	int wallType_Duration;
+	int BreakPointType;
 
 
 	int64 xpos;

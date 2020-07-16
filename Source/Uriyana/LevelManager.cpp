@@ -11,6 +11,9 @@
 #include "square/Square_rot.h"
 #include "square/Square_size.h"
 #include "square/Square_BigRot.h"
+#include "square/sq_floor.h"
+#include "triangle/Triangle_floor.h"
+  
 
 
 // Sets default values
@@ -86,7 +89,7 @@ void ALevelManager :: popBlock() {
 
 void ALevelManager::initBlocks() {
 	
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 10; i++) {
 		CreateLevelBlock();
 		//UE_LOG(LogTemp, Warning, TEXT("down"));
 		if (i == 2) {
@@ -111,9 +114,11 @@ void ALevelManager::CreateLevelBlock() {
 				xpos -= 500;
 
 			if (walkPath) {
-				AActor* sp = world->SpawnActor<AActor>(walkPath, FVector(xpos, 0, 200), FRotator(0), spawnPara);
+				AActor* sp = world->SpawnActor<AActor>(walkPath, FVector(xpos+500, 0, 200), FRotator(0), spawnPara);
 				blocks.Push(sp);
 			}
+			//=====close box
+
 
 			if (lvl_G == 1) {
 				//manage square circle triangle 
@@ -122,15 +127,16 @@ void ALevelManager::CreateLevelBlock() {
 
 					//floor
 					if (sq_floor) {
-						AActor* floor = world->SpawnActor<AActor>(sq_floor, FVector(xpos, 0, -200), FRotator(0), spawnPara);
+						AActor* floor = world->SpawnActor<AActor>(sq_floor, FVector(xpos+500, 0, -200), FRotator(0), spawnPara);
 						floor->SetActorScale3D(FVector(5, 10, .5f));
 						blocks.Push(floor);
 					}
 
 
-					WhatToSelect = (int)FMath::FRandRange(1, 8);
+					//WhatToSelect = (int)FMath::FRandRange(1, 8);
+					WhatToSelect = 9;
 
-
+					//floor----------------------------------------------------------------------------------
 					if (WhatToSelect == 1) {
 						int drawpos = xpos;
 						//random number
@@ -304,6 +310,44 @@ void ALevelManager::CreateLevelBlock() {
 						}
 
 					}
+					else if (WhatToSelect == 8) {
+						int xtemp = xpos;
+						for (int i = 0; i < 5; i++) {
+							int ytemp = -500;
+							for (int j = 0; j < 6; j++) {
+								if (sq_floor_pro) {
+									Asq_floor* aa = world->SpawnActor<Asq_floor>(sq_floor_pro, FVector(xtemp, ytemp, 0), FRotator(0, 0, 0), spawnPara);
+									//floor->SetActorScale3D(FVector(5, 10, .5f));
+									aa->set_znum(3);
+									blocks.Push(aa);
+								}
+								ytemp += 200;
+							}
+							xtemp += 200;
+						}
+					}
+					//big width same surface floor
+					else if (WhatToSelect == 9){
+						if (sq_floor_pro) {
+							Asq_floor* aa = world->SpawnActor<Asq_floor>(sq_floor_pro, FVector(xpos + 500, 0, 0), FRotator(0, 0, 0), spawnPara);
+							aa->SetActorScale3D(FVector(5, 10, 1));
+							aa->set_znum(3);
+							blocks.Push(aa);
+						}
+						
+					}
+
+
+					//wall---------------------------------------------------------------------------------------
+
+				}
+
+				else if (lvl_T == 3){
+					if (tri_floor) {
+						AActor* floor = world->SpawnActor<AActor>(tri_floor, FVector(xpos, 0, -200), FRotator(0,90,0), spawnPara);
+						//floor->SetActorScale3D(FVector(5, 10, .5f));
+						blocks.Push(floor);
+					}
 				}
 			}
 
@@ -322,7 +366,7 @@ void ALevelManager::CreateLevelBlock() {
 			}
 			
 			if (walkPath) {
-				AActor* sp = world->SpawnActor<AActor>(walkPath, FVector(xpos, 0, 200), FRotator(0), spawnPara);
+				AActor* sp = world->SpawnActor<AActor>(walkPath, FVector(xpos+500, 0, 200), FRotator(0), spawnPara);
 				sp->SetActorScale3D(FVector(10, 5, 0.5f));
 				blocks.Push(sp);
 			}
@@ -334,7 +378,7 @@ void ALevelManager::CreateLevelBlock() {
 					//WhatToSelect = (int)FMath::FRandRange(1, 8);
 
 					if (sq_floor) {
-						AActor* floor = world->SpawnActor<AActor>(sq_floor, FVector(xpos, 0, -200), FRotator(0), spawnPara);
+						AActor* floor = world->SpawnActor<AActor>(sq_floor, FVector(xpos+500, 0, -200), FRotator(0), spawnPara);
 						floor->SetActorScale3D(FVector(10, 10, .5f));
 						blocks.Push(floor);
 					}
@@ -343,18 +387,18 @@ void ALevelManager::CreateLevelBlock() {
 
 					if (WhatToSelect == 1) {
 						if (sq_floor) {
-							AActor* aa = world->SpawnActor<AActor>(sq_floor, FVector(xpos, 0, 0), FRotator(0), spawnPara);
+							AActor* aa = world->SpawnActor<AActor>(sq_floor, FVector(xpos+500, 0, 0), FRotator(0), spawnPara);
 							aa->SetActorScale3D(FVector(FMath::FRandRange(1, 5), 7, FMath::FRandRange(1.2f, 1.7f)));
 							blocks.Push(aa);
 						}
 					}
 
 					if ((int)(FMath::FRandRange(0, 50)) % 2 == 0) {
-						
-					}
-					if (sq_Big_Rot) {
-						AActor* aa = world->SpawnActor<AActor>(sq_Big_Rot, FVector(xpos, 0, 0), FRotator(0), spawnPara);
-						blocks.Push(aa);
+						/*if (sq_Big_Rot) {
+							AActor* aa = world->SpawnActor<AActor>(sq_Big_Rot, FVector(xpos, 0, 0), FRotator(0), spawnPara);
+							blocks.Push(aa);
+						}
+						*/
 					}
 					
 					

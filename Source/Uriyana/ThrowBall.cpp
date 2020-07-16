@@ -27,7 +27,7 @@ void AThrowBall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (timer >= 120) {
+	if (timer >= 260) {
 		Destroy();
 	}
 	else {
