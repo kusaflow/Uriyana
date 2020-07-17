@@ -53,14 +53,19 @@ public:
 	TSubclassOf<class ATriangle_floor> tri_floor;
 
 
-	int Theme;
-	int Theme_Duration;
-	int floorType;
-	int floorType_Duration;
+	int Themen =1;
+	int Theme_Duration=10;
+
+	int floorType = 1;
+	int floorType_Duration =5;
+
 	int wallType;
 	int wallType_Duration;
-	int BreakPointType;
+	//int BreakPointType;
 
+	int dissolve = -10;
+
+	bool tutDone = false;
 
 	int64 xpos;
 
@@ -82,10 +87,8 @@ public:
 
 	*/
 
-	int breakPoint = 10;
 	int PrefObj;
 
-	bool prevIsBreak = false;
 
 protected:
 	// Called when the game starts or when spawned

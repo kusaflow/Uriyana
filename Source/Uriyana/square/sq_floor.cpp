@@ -30,7 +30,7 @@ void Asq_floor::Tick(float DeltaTime)
 }
 
 
-void Asq_floor :: set_znum(int z) {
+void Asq_floor :: set_znum(float z) {
 	znum = z;
 	FVector orgSize = block->GetComponentScale();
 	block->SetWorldScale3D(FVector(orgSize.X, orgSize.Y, z));

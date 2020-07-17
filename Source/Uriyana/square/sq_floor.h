@@ -29,6 +29,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void set_znum(int z);
+	void set_znum(float z);
 
 };
