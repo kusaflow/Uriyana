@@ -360,6 +360,25 @@ void ALevelManager::CreateLevelBlock() {
 							}
 						}
 						}
+						//1|1|1|1|1|1|i
+						else if (floorType == 14) {
+							if (sq_floor_pro) {
+								float  xt = xpos;
+								for (int i = 0; i < 6; i++) {
+									
+									Asq_floor* a1 = world->SpawnActor<Asq_floor>(sq_floor_pro, FVector(xt, 0, 0), FRotator(0, 0, 0), spawnPara);
+									if (i%2==0)
+										a1->SetActorScale3D(FVector(0.83f,1,1));
+									else
+										a1->SetActorScale3D(FVector(0.83f, 3, 1));
+									a1->set_znum(3);
+									blocks.Push(a1);
+									
+									
+									xt += 200*0.83f;
+								}
+							}
+						}
 
 
 					}
@@ -648,6 +667,20 @@ void ALevelManager::CreateLevelBlock() {
 								yt += 200;
 							}
 						}
+						//y size = 3
+						if (floorType == 14) {
+							int yt = -300;
+							for (int i = 0; i < 4; i++) {
+								if (sq_floor_pro) {
+									Asq_floor* aa = world->SpawnActor<Asq_floor>(sq_floor_pro, FVector(xpos, yt, 0), FRotator(0, 0, 0), spawnPara);
+									aa->SetActorScale3D(FVector(1, 1, 1));
+									aa->set_znum(FMath::FRandRange(3.1, 3.5));
+									blocks.Push(aa);
+								}
+								yt += 200;
+							}
+						}
+						
 					}
 
 					if (lvl_G == 1000) {
@@ -685,7 +718,7 @@ void ALevelManager::CreateLevelBlock() {
 
 
 					}
-					floorType = FMath::FRandRange(1, 14);
+					floorType = 14;//FMath::FRandRange(1, 14);
 					floorType_Duration = FMath::FRandRange(3, 10);
 
 					xpos += 1000;

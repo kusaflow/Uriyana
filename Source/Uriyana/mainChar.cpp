@@ -85,12 +85,12 @@ void AmainChar::shoot() {
 		UWorld* world = GetWorld();
 		if (world) {
 			actor = world->SpawnActor<AThrowBall>(ball, FinalVec, FRotator(0), spawnPara);
-			actor->SetActorScale3D(FVector(0.4f, 0.4f, 0.4f));
 			
 			FVector forceToBall = Dir;
-			forceToBall.X *= 4300;
-			forceToBall.Y *= 4300;
-			forceToBall.Z *= 4300;
+			//4300
+			forceToBall.X *= 3500;
+			forceToBall.Y *= 3500;
+			forceToBall.Z *= 3500;
 			actor->getMesh()->AddImpulse(forceToBall, NAME_None, true);
 		}
 	}
