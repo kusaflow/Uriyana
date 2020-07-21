@@ -379,6 +379,65 @@ void ALevelManager::CreateLevelBlock() {
 								}
 							}
 						}
+						//patern like this `-.-`-.-`-.-`-.-`-.-`-.-`-.-`
+						else if (floorType == 15) {
+							if (sq_floor_pro) {
+								float xt = xpos;
+								float zt = 1;
+								for (int i = 0; i < 5; i++) {
+
+									Asq_floor* a1 = world->SpawnActor<Asq_floor>(sq_floor_pro, FVector(xt, 0, 0), FRotator(0, 0, 0), spawnPara);
+									if (i != 2) {
+										if (i < 2) {
+											zt -= 0.2;
+										}
+										else {
+											zt += 0.2;
+										}
+									}
+									a1->SetActorScale3D(FVector(1, 3*zt, 1));
+									a1->set_znum(zt*3);
+									blocks.Push(a1);
+
+
+									xt += 200;
+								}
+							}
+						}
+						//patern like this `-.-`-.-`-.-`-.-`-.-`-.-`-.-` every thing is variable in z
+						else if (floorType == 16) {
+							if (sq_floor_pro) {
+								float xt = xpos;
+								float zt = 1;
+								for (int i = 0; i < 5; i++) {
+
+									ASquare_size* a1 = world->SpawnActor<ASquare_size>(sq_Size, FVector(xt, 0, 0), FRotator(0, 0, 0), spawnPara);
+									if (i != 2) {
+										if (i < 2) {
+											zt -= 0.2;
+										}
+										else {
+											zt += 0.2;
+										}
+									}
+									a1->SetActorScale3D(FVector(1, 3 * zt, 3*zt));
+									a1->SizeSetUp(false, false, true, FMath::FRandRange(1,5), 3);
+									blocks.Push(a1);
+
+
+									xt += 200;
+								}
+							}
+						}
+						//variable sizes
+						else if (floorType == 17) {
+							if (sq_floor_pro) {
+								ASquare_size* a1 = world->SpawnActor<ASquare_size>(sq_Size, FVector(xpos+500, 0, 0), FRotator(0, 0, 0), spawnPara);
+								a1->SizeSetUp(true, true, true, FMath::FRandRange(1, 5), 3);
+								blocks.Push(a1);
+							}
+						}
+
 
 
 					}
@@ -668,7 +727,7 @@ void ALevelManager::CreateLevelBlock() {
 							}
 						}
 						//y size = 3
-						if (floorType == 14) {
+						else if (floorType == 14 || floorType == 15 || floorType == 16) {
 							int yt = -300;
 							for (int i = 0; i < 4; i++) {
 								if (sq_floor_pro) {
@@ -680,6 +739,7 @@ void ALevelManager::CreateLevelBlock() {
 								yt += 200;
 							}
 						}
+
 						
 					}
 
@@ -718,7 +778,7 @@ void ALevelManager::CreateLevelBlock() {
 
 
 					}
-					floorType = 14;//FMath::FRandRange(1, 14);
+					floorType =  FMath::FRandRange(1, 18);
 					floorType_Duration = FMath::FRandRange(3, 10);
 
 					xpos += 1000;
