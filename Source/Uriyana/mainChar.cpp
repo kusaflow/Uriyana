@@ -22,7 +22,7 @@ AmainChar::AmainChar()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(RootComponent);
 
-	FollowCamera->SetRelativeLocation(FVector(0,0,70));
+	FollowCamera->SetRelativeLocation(FVector(10,0,70));
 
 }
 
@@ -42,8 +42,9 @@ void AmainChar::Tick(float DeltaTime)
 
 	UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
 	gameInst->playerXpos = GetRootComponent()->GetComponentLocation().X;
-	
-
+	FRotator camR = FollowCamera->GetRelativeRotation();
+	RootComponent->GetChildComponent(1)->SetRelativeRotation(FRotator(0, camR.Yaw-90, 0));
+	//RootComponent->SetRelativeRotation(FRotator(camR.Pitch, camR.Yaw, camR.Roll));
 }
 
 // Called to bind functionality to input
@@ -52,6 +53,9 @@ void AmainChar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	PlayerInputComponent->BindAction("shoot", IE_Pressed, this, &AmainChar::shoot);
+	PlayerInputComponent->BindAxis("xAxis", this, &AmainChar::CameraYaw_z);
+	PlayerInputComponent->BindAxis("yAxis", this, &AmainChar::CameraPitch_y);
+
 }
 
 
@@ -71,11 +75,20 @@ void AmainChar::shoot() {
 	
 	APlayerController* playCtrl = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 
-	FVector Dir, loc;
-	playCtrl->DeprojectMousePositionToWorld(loc, Dir);
+	//FVector Dir, loc;
+	//playCtrl->DeprojectMousePositionToWorld(loc, Dir);
+
+	//RootComponent->GetChildComponent(1)->SetRelativeRotation(FRotator(Dir.Y, Dir.Z, Dir.X));
+
+	//UE_LOG(LogTemp, Warning, TEXT("x:%f, y:%f, z:%f"), &loc.X, &loc.Y, &loc.Z);
+
+	//FVector FinalVec = FVector(loc.X + (Dir.X*100), loc.Y + (Dir.Y*100), loc.Z + (Dir.Z*100));
+
+	FVector loc = FollowCamera->GetComponentLocation();
+	loc.X += 100;
 
 
-	FVector FinalVec = FVector(loc.X + (Dir.X*100), loc.Y + (Dir.Y*100), loc.Z + (Dir.Z*100));
+
 
 	AThrowBall* actor;
 	FActorSpawnParameters spawnPara;
@@ -84,9 +97,9 @@ void AmainChar::shoot() {
 	if (ball) {
 		UWorld* world = GetWorld();
 		if (world) {
-			actor = world->SpawnActor<AThrowBall>(ball, FinalVec, FRotator(0), spawnPara);
+			actor = world->SpawnActor<AThrowBall>(ball, loc, FRotator(0), spawnPara);
 			
-			FVector forceToBall = Dir;
+			FVector forceToBall = FollowCamera->GetForwardVector();
 			//4300
 			forceToBall.X *= 3500;
 			forceToBall.Y *= 3500;
@@ -100,3 +113,25 @@ void AmainChar::shoot() {
 
 
 }
+
+void AmainChar::CameraYaw_z(float val) {
+	FRotator newR = FollowCamera->GetRelativeRotation();
+	newR.Yaw = FMath::Clamp(newR.Yaw + val, -60.0f, 60.0f);
+
+	FollowCamera->SetRelativeRotation(newR);
+
+}
+
+void AmainChar::CameraPitch_y(float val) {
+	FRotator newR = FollowCamera->GetRelativeRotation();
+	newR.Pitch = FMath::Clamp(newR.Pitch + val, -30.0f, 30.0f);
+
+	FollowCamera->SetRelativeRotation(newR);
+
+}
+
+
+
+
+
+

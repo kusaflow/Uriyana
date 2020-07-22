@@ -3,6 +3,7 @@
 
 #include "ThrowBall.h"
 #include "Components/StaticMeshComponent.h"
+#include "gameInstance/kusaGameInstance.h"
 
 // Sets default values
 AThrowBall::AThrowBall()
@@ -27,11 +28,11 @@ void AThrowBall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (timer >= 260) {
+	UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
+	float playerPosX = gameInst->playerXpos;
+
+	if (ball->GetComponentLocation().X < playerPosX) {
 		Destroy();
-	}
-	else {
-		timer += 60 * DeltaTime;
 	}
 
 }

@@ -37,8 +37,10 @@ public:
 
 	void shoot();
 
-	void XAxis(float val);
+	UFUNCTION()
+	void CameraYaw_z(float val);
 
-	void YAxis(float val);
+	UFUNCTION()
+	void CameraPitch_y(float val);
 
 };
