@@ -24,6 +24,7 @@ ALevelManager::ALevelManager()
 
 	xpos = -50000;
 
+	rewardedTimeOut = 15;
 }
 
 ALevelManager :: ~ALevelManager() {
@@ -41,6 +42,24 @@ void ALevelManager::BeginPlay()
 {
 	Super::BeginPlay();
 	initBlocks();
+
+	TArray<AActor*> blocks;
+
+	if (reward && GetWorld()) {
+		FActorSpawnParameters spawnPara;
+		spawnPara.Owner = this;
+
+		AActor* sp = GetWorld()->SpawnActor<AActor>(reward, FVector(-45000, 0, 390), FRotator(0), spawnPara);
+		blocks.Push(sp);
+
+		AActor* sp2 = GetWorld()->SpawnActor<AActor>(reward, FVector(-42000, -130, 390), FRotator(0), spawnPara);
+		blocks.Push(sp2);
+
+		AActor* sp3 = GetWorld()->SpawnActor<AActor>(reward, FVector(-41800, 300, 390), FRotator(0), spawnPara);
+		blocks.Push(sp3);		
+	}
+	LB_array.Enqueue(blocks);
+
 	
 }
 
@@ -123,6 +142,23 @@ void ALevelManager::CreateLevelBlock() {
 								aa->SetActorScale3D(FVector(5, 4, 1));
 								aa->set_znum(3);
 								blocks.Push(aa);
+
+								int xt = xpos;
+								int yt = -500;
+								for (int i = 0; i < 5; i++) {
+									yt = -300;
+									for (int j = 0; j < 4; j++) {
+										if ((int)(FMath::FRandRange(0, 50)) % 11 == 0) {
+											if (RewardToDraw > 0) {
+
+												AActor* rew = GetWorld()->SpawnActor<AActor>(reward, FVector(xt, yt, 390), FRotator(0), spawnPara);
+												blocks.Push(rew);
+											}
+										}
+										yt += 200;
+									}
+									xt += 200;
+								}
 							}
 						}
 						//narrow
@@ -778,7 +814,9 @@ void ALevelManager::CreateLevelBlock() {
 
 
 					}
-					floorType =  FMath::FRandRange(1, 18);
+
+					tutDone = true;
+					floorType = 1;// FMath::FRandRange(1, 18);
 					floorType_Duration = FMath::FRandRange(3, 10);
 
 					xpos += 1000;
@@ -799,5 +837,11 @@ void ALevelManager::CreateLevelBlock() {
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("%d"), blocks.Num());
 	LB_array.Enqueue(blocks);
+	rewardedTimeOut--;
+	if (rewardedTimeOut <= 0) {
+		rewardedTimeOut = (int)FMath::FRandRange(1,20);
+		RewardToDraw += (int)FMath::FRandRange(1,5);
+	}
+
 }
 

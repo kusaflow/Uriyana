@@ -5,6 +5,7 @@
 #include "Components/BoxComponent.h"
 #include "DestructibleComponent.h"
 #include "../../ThrowBall.h"
+#include "../../gameInstance/kusaGameInstance.h"
 
 // Sets default values
 Arewarded_001::Arewarded_001()
@@ -18,7 +19,9 @@ Arewarded_001::Arewarded_001()
 	destr = CreateDefaultSubobject<UDestructibleComponent>(TEXT("destroy"));
 	destr->SetupAttachment(RootComponent);
 
-	block->OnComponentBeginOverlap.AddDynamic(this, &Arewarded_001::boxOverlap);
+	destr->OnComponentHit.AddDynamic(this, &Arewarded_001::OnCompHit);
+
+	broken = false;
 }
 
 // Called when the game starts or when spawned
@@ -35,13 +38,23 @@ void Arewarded_001::Tick(float DeltaTime)
 
 }
 
-void Arewarded_001 :: boxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+void Arewarded_001 :: OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	FVector NormalImpulse, const FHitResult& Hit) {
+
+	
 
 	AThrowBall* ball = Cast<AThrowBall>(OtherActor);
 
 	if (ball) {
-		destr->AddRadialForce(destr->GetComponentLocation(), 1000, -50000, ERadialImpulseFalloff::RIF_Linear, true);
+		//destr->AddRadialForce(destr->GetComponentLocation(), 1000, -50000, ERadialImpulseFalloff::RIF_Linear, true);
+		destr->ApplyRadiusDamage(5000000.0, destr->GetComponentLocation(), 10000.0, 50000.0, true);
+		if (!broken) {
+			UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
+			if (gameInst) {
+				gameInst->Health += 20;
+				broken = true;
+			}
+		}
 	}
 	
 }

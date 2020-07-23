@@ -31,6 +31,9 @@ void AmainChar::BeginPlay()
 {
 	Super::BeginPlay();
 	GetCharacterMovement()->MaxWalkSpeed = 600;
+
+	UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
+	gameInst->Health = 1000;
 	
 }
 
@@ -45,6 +48,8 @@ void AmainChar::Tick(float DeltaTime)
 	FRotator camR = FollowCamera->GetRelativeRotation();
 	RootComponent->GetChildComponent(1)->SetRelativeRotation(FRotator(0, camR.Yaw-90, 0));
 	//RootComponent->SetRelativeRotation(FRotator(camR.Pitch, camR.Yaw, camR.Roll));
+
+	gameInst->Health -= 10 * DeltaTime;
 }
 
 // Called to bind functionality to input

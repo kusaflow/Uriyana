@@ -52,6 +52,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, category = "Triangle")
 	TSubclassOf<class ATriangle_floor> tri_floor;
 
+	//---------------------------------Rewarded============================================================
+	UPROPERTY(EditDefaultsOnly, category = "Rewarded")
+	TSubclassOf<class AActor> reward;
 
 	int Themen =1;
 	int Theme_Duration=10;
@@ -88,6 +91,10 @@ public:
 	*/
 
 	int PrefObj;
+	
+	///rewarded 
+	int rewardedTimeOut ;
+	int RewardToDraw;
 
 
 protected:
