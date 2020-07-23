@@ -60,7 +60,7 @@ public:
 	int Theme_Duration=10;
 
 	int floorType = 1;
-	int floorType_Duration =15;
+	int floorType_Duration =10;
 
 	int wallType;
 	int wallType_Duration;

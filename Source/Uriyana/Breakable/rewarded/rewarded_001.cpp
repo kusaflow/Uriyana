@@ -51,8 +51,12 @@ void Arewarded_001 :: OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor
 		if (!broken) {
 			UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
 			if (gameInst) {
-				gameInst->Health += 20;
+				gameInst->Health += 50;
 				broken = true;
+
+				if (gameInst->Health >= 1000) {
+					gameInst->Health = 1000;
+				}
 			}
 		}
 	}

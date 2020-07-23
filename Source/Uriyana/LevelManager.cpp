@@ -94,7 +94,7 @@ void ALevelManager :: popBlock() {
 	LB_array.Peek(rem);
 	LB_array.Pop();
 	
-	UE_LOG(LogTemp, Warning, TEXT("%d"), rem.Num());
+	//UE_LOG(LogTemp, Warning, TEXT("%d"), rem.Num());
 	while (rem.Num() != 0) {
 		rem.Pop()->Destroy();
 	}
@@ -149,11 +149,13 @@ void ALevelManager::CreateLevelBlock() {
 									yt = -300;
 									for (int j = 0; j < 4; j++) {
 										if ((int)(FMath::FRandRange(0, 50)) % 11 == 0) {
+											
 											if (RewardToDraw > 0) {
-
 												AActor* rew = GetWorld()->SpawnActor<AActor>(reward, FVector(xt, yt, 390), FRotator(0), spawnPara);
 												blocks.Push(rew);
+												RewardToDraw--;
 											}
+											
 										}
 										yt += 200;
 									}
@@ -168,6 +170,61 @@ void ALevelManager::CreateLevelBlock() {
 								aa->SetActorScale3D(FVector(5, 2, 1));
 								aa->set_znum(3);
 								blocks.Push(aa);
+
+								if (RewardToDraw > 0) {
+									if ((int)(FMath::FRandRange(1, 50)) % 2 == 0) {
+										if (sq_floor_pro && reward) {
+											int xt = FMath::FRandRange(xpos, xpos + 800);
+											int yt = FMath::FRandRange(-600, -300);
+
+											Asq_floor* a1 = world->SpawnActor<Asq_floor>(sq_floor_pro,
+												FVector(xt, yt, 0),
+												FRotator(0, 0, 0), spawnPara);
+											a1->set_znum(3);
+
+											AActor* rew = GetWorld()->SpawnActor<AActor>(reward, FVector(xt, yt, 390), FRotator(0), spawnPara);
+											blocks.Push(rew);
+
+											RewardToDraw--;
+											blocks.Push(a1);
+										}
+									}
+								}
+
+								if (RewardToDraw > 0) {
+									if ((int)(FMath::FRandRange(1, 50)) % 2 == 0) {
+										if (sq_floor_pro && reward){
+											int xt = FMath::FRandRange(xpos, xpos + 800);
+											int yt = FMath::FRandRange(300, 600);
+
+											Asq_floor* a1 = world->SpawnActor<Asq_floor>(sq_floor_pro,
+												FVector(xt, yt, 0),
+												FRotator(0, 0, 0), spawnPara);
+											a1->set_znum(3);
+
+											AActor* rew = GetWorld()->SpawnActor<AActor>(reward, FVector(xt, yt, 390), FRotator(0), spawnPara);
+											blocks.Push(rew);
+
+											RewardToDraw--;
+											blocks.Push(a1);
+										}
+									}
+								}
+
+								int xt = xpos;
+								int yt = -100;
+								for (int i = 0; i < 5; i++) {
+									yt = -100;
+									for (int j = 0; j < 2; j++) {
+										if (RewardToDraw > 0) {
+											AActor* rew = GetWorld()->SpawnActor<AActor>(reward, FVector(xt, yt, 390), FRotator(0), spawnPara);
+											blocks.Push(rew);
+											RewardToDraw--;
+										}
+										yt += 200;
+									}
+									xt += 200;
+								}
 							}
 						}
 						//wide
@@ -177,16 +234,55 @@ void ALevelManager::CreateLevelBlock() {
 								aa->SetActorScale3D(FVector(5, 10, 1));
 								aa->set_znum(3);
 								blocks.Push(aa);
+
+								int xt = xpos;
+								int yt = -500;
+								for (int i = 0; i < 5; i++) {
+									yt = -900;
+									for (int j = 0; j < 10; j++) {
+										if ((int)(FMath::FRandRange(0, 50)) % 11 == 0) {
+
+											if (RewardToDraw > 0) {
+												AActor* rew = GetWorld()->SpawnActor<AActor>(reward, FVector(xt, yt, 390), FRotator(0), spawnPara);
+												blocks.Push(rew);
+												RewardToDraw--;
+											}
+
+										}
+										yt += 200;
+									}
+									xt += 200;
+								}
 							}
 						}
 
 						//wide narrow normal
 						else if (floorType == 4) {
 							if (sq_floor_pro) {
+								int ys = FMath::FRandRange(1, 10);
 								Asq_floor* aa = world->SpawnActor<Asq_floor>(sq_floor_pro, FVector(xpos + 500, 0, 0), FRotator(0, 0, 0), spawnPara);
-								aa->SetActorScale3D(FVector(5, FMath::FRandRange(1,10), 1));
+								aa->SetActorScale3D(FVector(5, ys, 1));
 								aa->set_znum(3);
 								blocks.Push(aa);
+
+								int xt = xpos;
+								int yt = -500;
+								for (int i = 0; i < 5; i++) {
+									yt = -100;
+									for (int j = 0; j < 2; j++) {
+										if ((int)(FMath::FRandRange(0, 50)) % 11 == 0) {
+
+											if (RewardToDraw > 0) {
+												AActor* rew = GetWorld()->SpawnActor<AActor>(reward, FVector(xt, yt, 390), FRotator(0), spawnPara);
+												blocks.Push(rew);
+												RewardToDraw--;
+											}
+
+										}
+										yt += 200;
+									}
+									xt += 200;
+								}
 							}
 						}
 						//normal error 33%
@@ -205,6 +301,15 @@ void ALevelManager::CreateLevelBlock() {
 											Asq_floor* a1 = world->SpawnActor<Asq_floor>(sq_floor_pro, FVector(xt, yt, 0), FRotator(0, 0, 0), spawnPara);
 											a1->set_znum(FMath::FRandRange(3.1, 3.5));
 											blocks.Push(a1);
+										}
+
+										if ((int)(FMath::FRandRange(0, 50)) % 11 == 0 && j != 0) {
+
+											if (RewardToDraw > 0) {
+												AActor* rew = GetWorld()->SpawnActor<AActor>(reward, FVector(xt, yt, 420), FRotator(0), spawnPara);
+												blocks.Push(rew);
+												RewardToDraw--;
+											}
 										}
 										yt += 200;
 									}
@@ -229,6 +334,14 @@ void ALevelManager::CreateLevelBlock() {
 											a1->set_znum(FMath::FRandRange(3.1, 3.5));
 											blocks.Push(a1);
 										}
+										if ((int)(FMath::FRandRange(0, 50)) % 11 == 0 && j != 0) {
+
+											if (RewardToDraw > 0) {
+												AActor* rew = world->SpawnActor<AActor>(reward, FVector(xt, yt, 420), FRotator(0), spawnPara);
+												blocks.Push(rew);
+												RewardToDraw--;
+											}
+										}
 										yt += 200;
 									}
 									xt += 200;
@@ -251,6 +364,14 @@ void ALevelManager::CreateLevelBlock() {
 											Asq_floor* a1 = world->SpawnActor<Asq_floor>(sq_floor_pro, FVector(xt, yt, 0), FRotator(0, 0, 0), spawnPara);
 											a1->set_znum(FMath::FRandRange(3.1, 3.5));
 											blocks.Push(a1);
+										}
+										if ((int)(FMath::FRandRange(0, 50)) % 11 == 0 && j != 0) {
+
+											if (RewardToDraw > 0) {
+												AActor* rew = world->SpawnActor<AActor>(reward, FVector(xt, yt, 420), FRotator(0), spawnPara);
+												blocks.Push(rew);
+												RewardToDraw--;
+											}
 										}
 										yt += 200;
 									}
@@ -275,6 +396,14 @@ void ALevelManager::CreateLevelBlock() {
 											a1->set_znum(FMath::FRandRange(3.1, 3.3));
 											blocks.Push(a1);
 										}
+										if ((int)(FMath::FRandRange(0, 50)) % 11 == 0) {
+
+											if (RewardToDraw > 0) {
+												AActor* rew = world->SpawnActor<AActor>(reward, FVector(xt, yt, 420), FRotator(0), spawnPara);
+												blocks.Push(rew);
+												RewardToDraw--;
+											}
+										}
 										yt += 200;
 									}
 									xt += 200;
@@ -297,6 +426,14 @@ void ALevelManager::CreateLevelBlock() {
 											Asq_floor* a1 = world->SpawnActor<Asq_floor>(sq_floor_pro, FVector(xt, yt, 0), FRotator(0, 0, 0), spawnPara);
 											a1->set_znum(FMath::FRandRange(3.1, 3.3));
 											blocks.Push(a1);
+										}
+										if ((int)(FMath::FRandRange(0, 50)) % 11 == 0) {
+
+											if (RewardToDraw > 0) {
+												AActor* rew = world->SpawnActor<AActor>(reward, FVector(xt, yt, 420), FRotator(0), spawnPara);
+												blocks.Push(rew);
+												RewardToDraw--;
+											}
 										}
 										yt += 200;
 									}
@@ -321,6 +458,14 @@ void ALevelManager::CreateLevelBlock() {
 										a1->set_znum(FMath::FRandRange(3.1, 3.3));
 										blocks.Push(a1);
 									}
+									if ((int)(FMath::FRandRange(0, 50)) % 11 == 0) {
+
+										if (RewardToDraw > 0) {
+											AActor* rew = world->SpawnActor<AActor>(reward, FVector(xt, yt, 420), FRotator(0), spawnPara);
+											blocks.Push(rew);
+											RewardToDraw--;
+										}
+									}
 									yt += 200;
 								}
 								xt += 200;
@@ -343,6 +488,14 @@ void ALevelManager::CreateLevelBlock() {
 										Asq_floor* a1 = world->SpawnActor<Asq_floor>(sq_floor_pro, FVector(xt, yt, 0), FRotator(0, 0, 0), spawnPara);
 										a1->set_znum(FMath::FRandRange(3.1, 3.3));
 										blocks.Push(a1);
+									}
+									if ((int)(FMath::FRandRange(0, 50)) % 11 == 0) {
+
+										if (RewardToDraw > 0) {
+											AActor* rew = world->SpawnActor<AActor>(reward, FVector(xt, yt, 420), FRotator(0), spawnPara);
+											blocks.Push(rew);
+											RewardToDraw--;
+										}
 									}
 									yt += 200;
 								}
@@ -367,6 +520,14 @@ void ALevelManager::CreateLevelBlock() {
 										a1->set_znum(FMath::FRandRange(3.1, 3.3));
 										blocks.Push(a1);
 									}
+									if ((int)(FMath::FRandRange(0, 50)) % 11 == 0) {
+
+										if (RewardToDraw > 0) {
+											AActor* rew = world->SpawnActor<AActor>(reward, FVector(xt, yt, 420), FRotator(0), spawnPara);
+											blocks.Push(rew);
+											RewardToDraw--;
+										}
+									}
 									yt += 200;
 								}
 								xt += 200;
@@ -389,6 +550,14 @@ void ALevelManager::CreateLevelBlock() {
 										Asq_floor* a1 = world->SpawnActor<Asq_floor>(sq_floor_pro, FVector(xt, yt, 0), FRotator(0, 0, 0), spawnPara);
 										a1->set_znum(FMath::FRandRange(3.1, 3.3));
 										blocks.Push(a1);
+									}
+									if ((int)(FMath::FRandRange(0, 50)) % 11 == 0) {
+
+										if (RewardToDraw > 0) {
+											AActor* rew = world->SpawnActor<AActor>(reward, FVector(xt, yt, 420), FRotator(0), spawnPara);
+											blocks.Push(rew);
+											RewardToDraw--;
+										}
 									}
 									yt += 200;
 								}
@@ -816,7 +985,7 @@ void ALevelManager::CreateLevelBlock() {
 					}
 
 					tutDone = true;
-					floorType = 1;// FMath::FRandRange(1, 18);
+					floorType = 12;// FMath::FRandRange(1, 18);
 					floorType_Duration = FMath::FRandRange(3, 10);
 
 					xpos += 1000;
@@ -839,7 +1008,7 @@ void ALevelManager::CreateLevelBlock() {
 	LB_array.Enqueue(blocks);
 	rewardedTimeOut--;
 	if (rewardedTimeOut <= 0) {
-		rewardedTimeOut = (int)FMath::FRandRange(1,20);
+		rewardedTimeOut = (int)FMath::FRandRange(1,7);
 		RewardToDraw += (int)FMath::FRandRange(1,5);
 	}
 
