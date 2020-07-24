@@ -13,13 +13,14 @@ Arewarded_001::Arewarded_001()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	block = CreateDefaultSubobject<UBoxComponent>(TEXT("block"));
-	RootComponent = block;
-
+	
 	destr = CreateDefaultSubobject<UDestructibleComponent>(TEXT("destroy"));
-	destr->SetupAttachment(RootComponent);
+	RootComponent = destr;
 
-	destr->OnComponentHit.AddDynamic(this, &Arewarded_001::OnCompHit);
+	block = CreateDefaultSubobject<UBoxComponent>(TEXT("block"));
+	block->SetupAttachment(RootComponent);
+
+	block->OnComponentBeginOverlap.AddDynamic(this, &Arewarded_001::OnOverlapBegin);
 
 	broken = false;
 }
@@ -38,8 +39,8 @@ void Arewarded_001::Tick(float DeltaTime)
 
 }
 
-void Arewarded_001 :: OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-	FVector NormalImpulse, const FHitResult& Hit) {
+void Arewarded_001 ::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+	 UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 
 	
 
