@@ -21,6 +21,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, category = "meshes")
 	TSubclassOf<class AThrowBall> ball;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "gunRelease", meta = (AllowPrivateAccess = "true"))
+	class UBoxComponent* fireLoc;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "gun", meta = (AllowPrivateAccess = "true"))
+	class UStaticMeshComponent* gun;
+
 	
 protected:
 	// Called when the game starts or when spawned

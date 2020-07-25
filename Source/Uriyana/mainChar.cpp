@@ -12,6 +12,7 @@
 #include "Engine/World.h"
 #include "Components/PrimitiveComponent.h"
 #include "gameInstance/kusaGameInstance.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 AmainChar::AmainChar()
@@ -24,6 +25,21 @@ AmainChar::AmainChar()
 
 	FollowCamera->SetRelativeLocation(FVector(10,0,70));
 
+	gun = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("gun"));
+	gun->SetupAttachment(FollowCamera);
+
+	fireLoc = CreateDefaultSubobject<UBoxComponent>(TEXT("fireLoc"));
+	fireLoc->SetupAttachment(FollowCamera);
+
+	gun->SetRelativeLocation(FVector(70, 10, -30));
+	gun->SetRelativeRotation(FRotator(0, -90, 0));
+	gun->SetRelativeScale3D(FVector(0.4));
+
+
+	fireLoc->SetRelativeLocation(FVector(90, 10, -30));
+	fireLoc->SetRelativeRotation(FRotator(3, 0, 0));
+	fireLoc->SetRelativeScale3D(FVector(0.5));
+
 }
 
 // Called when the game starts or when spawned
@@ -34,6 +50,10 @@ void AmainChar::BeginPlay()
 
 	UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
 	gameInst->Health = 1000;
+
+
+	
+
 	
 }
 
@@ -49,7 +69,11 @@ void AmainChar::Tick(float DeltaTime)
 	RootComponent->GetChildComponent(1)->SetRelativeRotation(FRotator(0, camR.Yaw-90, 0));
 	//RootComponent->SetRelativeRotation(FRotator(camR.Pitch, camR.Yaw, camR.Roll));
 
-	gameInst->Health -= 10 * DeltaTime;
+	gameInst->Health -= 20 * DeltaTime;
+
+	if (gameInst->Health <0) {
+		UGameplayStatics::OpenLevel(this, FName("gameOver"), true);
+	}
 }
 
 // Called to bind functionality to input
@@ -89,11 +113,7 @@ void AmainChar::shoot() {
 
 	//FVector FinalVec = FVector(loc.X + (Dir.X*100), loc.Y + (Dir.Y*100), loc.Z + (Dir.Z*100));
 
-	FVector loc = FollowCamera->GetComponentLocation();
-	loc.X += 100;
-
-
-
+	FVector loc = fireLoc->GetComponentLocation();
 
 	AThrowBall* actor;
 	FActorSpawnParameters spawnPara;
@@ -104,7 +124,7 @@ void AmainChar::shoot() {
 		if (world) {
 			actor = world->SpawnActor<AThrowBall>(ball, loc, FRotator(0), spawnPara);
 			
-			FVector forceToBall = FollowCamera->GetForwardVector();
+			FVector forceToBall = fireLoc->GetForwardVector();
 			//4300
 			forceToBall.X *= 3500;
 			forceToBall.Y *= 3500;

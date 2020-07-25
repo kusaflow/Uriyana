@@ -56,7 +56,28 @@ public:
 	UPROPERTY(EditDefaultsOnly, category = "Rewarded")
 	TSubclassOf<class AActor> reward;
 
-	int Themen =1;
+	//--------------------------Theme 1 breakable------------------------------------------------------
+	UPROPERTY(EditDefaultsOnly, category = "T1_Breakable")
+	TSubclassOf<class AActor> T1_breakable;
+
+	UPROPERTY(EditDefaultsOnly, category = "T1_Breakable")
+	TSubclassOf<class AActor> T2_breakable;
+
+	UPROPERTY(EditDefaultsOnly, category = "T1_Breakable")
+	TSubclassOf<class AActor> T3_breakable;
+
+	UPROPERTY(EditDefaultsOnly, category = "T1_Breakable")
+	TSubclassOf<class AActor> T4_breakable;
+
+	UPROPERTY(EditDefaultsOnly, category = "T1_Breakable")
+	TSubclassOf<class AActor> T5_breakable; 
+	
+	TSubclassOf<class AActor> breakableActor;
+
+
+
+
+	int Theme =1;
 	int Theme_Duration=10;
 
 	int floorType = 1;
@@ -95,6 +116,9 @@ public:
 	///rewarded 
 	int rewardedTimeOut ;
 	int RewardToDraw;
+
+	int breakableTimeout;
+	int breakableToDraw;
 
 
 protected:

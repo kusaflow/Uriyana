@@ -19,7 +19,6 @@ AThrowBall::AThrowBall()
 void AThrowBall::BeginPlay()
 {
 	Super::BeginPlay();
-	timer = 0;
 	
 }
 
@@ -32,7 +31,8 @@ void AThrowBall::Tick(float DeltaTime)
 	float playerPosX = gameInst->playerXpos;
 
 	if (ball->GetComponentLocation().X < playerPosX) {
-		Destroy();
+		if (ball)
+			Destroy();
 	}
 
 }

@@ -52,7 +52,7 @@ void Arewarded_001 ::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 		if (!broken) {
 			UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
 			if (gameInst) {
-				gameInst->Health += 50;
+				gameInst->Health += 40;
 				broken = true;
 
 				if (gameInst->Health >= 1000) {
