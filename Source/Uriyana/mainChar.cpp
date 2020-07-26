@@ -69,7 +69,7 @@ void AmainChar::Tick(float DeltaTime)
 	RootComponent->GetChildComponent(1)->SetRelativeRotation(FRotator(0, camR.Yaw-90, 0));
 	//RootComponent->SetRelativeRotation(FRotator(camR.Pitch, camR.Yaw, camR.Roll));
 
-	gameInst->Health -= 20 * DeltaTime;
+	gameInst->Health -= 15 * DeltaTime;
 
 	if (gameInst->Health <0) {
 		UGameplayStatics::OpenLevel(this, FName("gameOver"), true);

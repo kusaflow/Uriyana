@@ -71,6 +71,24 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, category = "T1_Breakable")
 	TSubclassOf<class AActor> T5_breakable; 
+
+	//theme 1 big models
+
+	UPROPERTY(EditDefaultsOnly, category = "T1_Big_Breakable")
+	TSubclassOf<class AActor> T1_b1;
+
+	UPROPERTY(EditDefaultsOnly, category = "T1_Big_Breakable")
+	TSubclassOf<class AActor> T1_b2;
+
+	UPROPERTY(EditDefaultsOnly, category = "T1_Big_Breakable")
+	TSubclassOf<class AActor> T1_b3;
+
+	UPROPERTY(EditDefaultsOnly, category = "T1_Big_Breakable")
+	TSubclassOf<class AActor> T1_b4;
+
+	UPROPERTY(EditDefaultsOnly, category = "T1_Big_Breakable")
+	TSubclassOf<class AActor> T1_b5;
+
 	
 	TSubclassOf<class AActor> breakableActor;
 

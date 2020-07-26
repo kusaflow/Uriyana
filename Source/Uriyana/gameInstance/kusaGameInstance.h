@@ -18,5 +18,12 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	float Health = 0;
-	
+
+	UPROPERTY(BlueprintReadWrite, Category = "kusaVar")
+	bool bGotHit = false;
+
+	UPROPERTY(BlueprintReadWrite, Category = "kusaVar")
+	float WealponPower = 0;
+
+
 };

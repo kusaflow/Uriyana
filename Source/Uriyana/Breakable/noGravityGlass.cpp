@@ -60,10 +60,13 @@ void AnoGravityGlass::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 
 			if (gameInst) {
 				gameInst->Health -= 100;
+				gameInst->bGotHit = true;
+				broken = true;
 			}
 		}
 		return;
 	}
+	
 
 	AThrowBall* ball = Cast<AThrowBall>(OtherActor);
 
@@ -80,6 +83,7 @@ void AnoGravityGlass::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 	}
 	else {
 		destr->SetEnableGravity(true);
+		broken = true;
 	}
 
 }
