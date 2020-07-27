@@ -72,6 +72,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, category = "T1_Breakable")
 	TSubclassOf<class AActor> T5_breakable; 
 
+	UPROPERTY(EditDefaultsOnly, category = "T1_Wall")
+	TSubclassOf<class Asq_floor> t1_wall;
+
 	//theme 1 big models
 
 	UPROPERTY(EditDefaultsOnly, category = "T1_Big_Breakable")
@@ -96,7 +99,9 @@ public:
 
 
 	int Theme =1;
-	int Theme_Duration=10;
+
+	UPROPERTY(BlueprintReadOnly, Category = "kusavar")
+	int Theme_Duration=20;
 
 	int floorType = 1;
 	int floorType_Duration =10;
@@ -138,6 +143,9 @@ public:
 	int breakableTimeout;
 	int breakableToDraw;
 
+
+	int blindOut = 0;
+	bool themeisOver = false;
 
 protected:
 	// Called when the game starts or when spawned

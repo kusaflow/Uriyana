@@ -14,6 +14,7 @@ class URIYANA_API UkusaGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 public:
+	UPROPERTY(BlueprintReadOnly)
 	float playerXpos = 0;
 
 	UPROPERTY(BlueprintReadOnly)

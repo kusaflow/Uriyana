@@ -5,6 +5,8 @@
 #include "Components/BoxComponent.h"
 #include "DestructibleComponent.h"
 #include "../ThrowBall.h"
+#include "../mainChar.h"
+#include "../gameInstance/kusaGameInstance.h"
  
 
 // Sets default values
@@ -13,18 +15,23 @@ AGlass_001::AGlass_001()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	block = CreateDefaultSubobject<UBoxComponent>(TEXT("block"));
-	RootComponent = block;
-
 	destr = CreateDefaultSubobject<UDestructibleComponent>(TEXT("destroy"));
-	destr->SetupAttachment(RootComponent);
+	RootComponent = destr;
 
-	backMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("backBone"));
-	backMesh->SetupAttachment(destr);
+	block = CreateDefaultSubobject<UBoxComponent>(TEXT("block"));
+	block->SetupAttachment(destr);
 
 
-	destr->OnComponentHit.AddDynamic(this, &AGlass_001::OnCompHit);
+	block->OnComponentBeginOverlap.AddDynamic(this, &AGlass_001::OnOverlapBegin);
 
+	block->SetGenerateOverlapEvents(true);
+
+	broken = false;
+	destr->SetEnableGravity(false);
+
+	basedamage = 5000000.0;
+	impulseRadius = 10000.0;
+	impulse = 50000.0;
 	
 }
 
@@ -32,7 +39,6 @@ AGlass_001::AGlass_001()
 void AGlass_001::BeginPlay()
 {
 	Super::BeginPlay();
-	bisBroken = false;
 	
 }
 
@@ -41,11 +47,11 @@ void AGlass_001::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (!bisBroken) {
+	if (!broken) {
 		if (inRight)
-			destr->AddWorldOffset(FVector(0,500 *DeltaTime, 0));
+			destr->AddWorldOffset(FVector(0,300 *DeltaTime, 0));
 		else 	
-			destr->AddWorldOffset(FVector(0, -500 * DeltaTime, 0));
+			destr->AddWorldOffset(FVector(0, -300 * DeltaTime, 0));
 
 		if (destr->GetComponentLocation().Y > 1000) {
 			inRight = false;
@@ -57,18 +63,42 @@ void AGlass_001::Tick(float DeltaTime)
 
 }
 
-void AGlass_001 :: OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-	FVector NormalImpulse, const FHitResult& Hit) {
+void AGlass_001 :: OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+
+	AmainChar* mainCh = Cast<AmainChar>(OtherActor);
+
+	if (mainCh) {
+		if (!broken) {
+			UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
+
+			if (gameInst) {
+				gameInst->Health -= 100;
+				gameInst->bGotHit = true;
+				broken = true;
+			}
+		}
+		return;
+	}
+
 
 	AThrowBall* ball = Cast<AThrowBall>(OtherActor);
 
 	if (ball) {
-		destr->ApplyDamage(60000, Hit.Location, Hit.ImpactNormal, 1000);
-		if (backMesh)
-			backMesh->DestroyComponent();
-		
-		destr->SetEnableGravity(true);
-		bisBroken = true;
+		//destr->AddRadialForce(destr->GetComponentLocation(), 1000, -50000, ERadialImpulseFalloff::RIF_Linear, true);
+		if (!broken) {
+			broken = true;
+			destr->ApplyRadiusDamage(basedamage, destr->GetComponentLocation(), impulseRadius, impulse, true);
 
+			destr->SetEnableGravity(true);
+
+
+		}
 	}
+	else {
+		destr->SetEnableGravity(true);
+		broken = true;
+	}
+
+	
 }

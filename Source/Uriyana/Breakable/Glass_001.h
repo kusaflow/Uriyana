@@ -21,11 +21,17 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UDestructibleComponent* destr;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UStaticMeshComponent* backMesh;
-
 	bool inRight = true;
-	bool bisBroken = false;
+	bool broken = false;
+
+	UPROPERTY(EditAnywhere, Category = "damage")
+		float basedamage = 0;
+
+	UPROPERTY(EditAnywhere, Category = "damage")
+		float impulseRadius = 0;
+
+	UPROPERTY(EditAnywhere, Category = "damage")
+		float impulse = 0;
 
 protected:
 	// Called when the game starts or when spawned
@@ -36,6 +42,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
-	void OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
+			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 };

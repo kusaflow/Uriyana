@@ -84,6 +84,7 @@ void AnoGravityGlass::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 	else {
 		destr->SetEnableGravity(true);
 		broken = true;
+		destr->DestroyComponent(true);
 	}
 
 }

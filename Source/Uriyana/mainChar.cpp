@@ -50,10 +50,6 @@ void AmainChar::BeginPlay()
 
 	UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
 	gameInst->Health = 1000;
-
-
-	
-
 	
 }
 
@@ -72,7 +68,7 @@ void AmainChar::Tick(float DeltaTime)
 	gameInst->Health -= 15 * DeltaTime;
 
 	if (gameInst->Health <0) {
-		UGameplayStatics::OpenLevel(this, FName("gameOver"), true);
+		//UGameplayStatics::OpenLevel(this, FName("gameOver"), true);
 	}
 }
 
