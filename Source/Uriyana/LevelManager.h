@@ -89,9 +89,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, category = "T1_Big_Breakable")
 	TSubclassOf<class AActor> T1_b4;
 
-	UPROPERTY(EditDefaultsOnly, category = "T1_Big_Breakable")
-	TSubclassOf<class AActor> T1_b5;
-
 	
 	TSubclassOf<class AActor> breakableActor;
 

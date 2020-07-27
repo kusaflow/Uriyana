@@ -78,7 +78,7 @@ void ALevelManager::Tick(float DeltaTime)
 		UpdateLevel();
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("%f"), &Theme_Duration);
+	//UE_LOG(LogTemp, Warning, TEXT("%f"), &Theme_Duration);
 
 	if (themeisOver && blindOut == 0) {
 		while (!LB_array.IsEmpty()) {
@@ -95,9 +95,9 @@ void ALevelManager::Tick(float DeltaTime)
 			ch->SetActorLocation(FVector(-47000.0, 0, 400));
 		gameInst->playerXpos = -47000;
 
-		Theme_Duration = 20;
+		Theme_Duration = 110;
 		initBlocks();
-		UE_LOG(LogTemp, Warning, TEXT("--------------------------------------------------------------------"));
+		//UE_LOG(LogTemp, Warning, TEXT("--------------------------------------------------------------------"));
 	}
 }
 
@@ -871,7 +871,7 @@ void ALevelManager::CreateLevelBlock() {
 								//breakable stuffs
 								else if (floorType == 17) {
 									floorType_Duration = FMath::FRandRange(3, 10);
-									floorType = FMath::FRandRange(1, 22);
+									floorType = FMath::FRandRange(1, 21);
 									if (T1_b1) {
 										AActor* rew = world->SpawnActor<AActor>(T1_b1, FVector(xpos + 500, 0, 400), FRotator(0), spawnPara);
 										blocks.Push(rew);
@@ -880,7 +880,7 @@ void ALevelManager::CreateLevelBlock() {
 								}
 								else if (floorType == 18) {
 									floorType_Duration = FMath::FRandRange(3, 10);
-									floorType = FMath::FRandRange(1, 22);
+									floorType = FMath::FRandRange(1, 21);
 									if (T1_b2) {
 										AActor* rew = world->SpawnActor<AActor>(T1_b2, FVector(xpos + 500, 0, 320), FRotator(0), spawnPara);
 										blocks.Push(rew);
@@ -889,7 +889,7 @@ void ALevelManager::CreateLevelBlock() {
 								}
 								else if (floorType == 19) {
 									floorType_Duration = FMath::FRandRange(3, 10);
-									floorType = FMath::FRandRange(1, 22);
+									floorType = FMath::FRandRange(1, 21);
 									if (T1_b3) {
 										AActor* rew = world->SpawnActor<AActor>(T1_b3, FVector(xpos + 500, 0, 400), FRotator(0), spawnPara);
 										blocks.Push(rew);
@@ -898,20 +898,10 @@ void ALevelManager::CreateLevelBlock() {
 								}
 
 								else if (floorType == 20) {
+									floorType = FMath::FRandRange(1, 21);
 									floorType_Duration = FMath::FRandRange(3, 10);
-									floorType = FMath::FRandRange(1, 22);
 									if (T1_b4) {
 										AActor* rew = world->SpawnActor<AActor>(T1_b4, FVector(xpos + 500, 0, 400), FRotator(0), spawnPara);
-										blocks.Push(rew);
-									}
-
-								}
-
-								else if (floorType == 21) {
-									floorType = FMath::FRandRange(1, 22);
-									floorType_Duration = FMath::FRandRange(3, 10);
-									if (T1_b5) {
-										AActor* rew = world->SpawnActor<AActor>(T1_b5, FVector(xpos + 500, 0, 400), FRotator(0), spawnPara);
 										blocks.Push(rew);
 									}
 
@@ -1307,7 +1297,7 @@ void ALevelManager::CreateLevelBlock() {
 						}
 
 						tutDone = true;
-						floorType = FMath::FRandRange(1, 22);
+						floorType = FMath::FRandRange(1, 21);
 						floorType_Duration = FMath::FRandRange(3, 10);
 
 						xpos += 1000;
@@ -1329,7 +1319,7 @@ void ALevelManager::CreateLevelBlock() {
 				}
 
 				if (breakableTimeout <= 0) {
-					breakableTimeout = (int)FMath::FRandRange(1, 7);
+					breakableTimeout = (int)FMath::FRandRange(1, 5);
 					breakableToDraw = (int)FMath::FRandRange(1, 3);
 				}
 			}
