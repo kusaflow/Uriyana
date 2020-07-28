@@ -13,6 +13,8 @@
 #include "Components/PrimitiveComponent.h"
 #include "gameInstance/kusaGameInstance.h"
 #include "Components/BoxComponent.h"
+#include "Sound/SoundCue.h"
+#include "Components/SkeletalMeshComponent.h"
 
 // Sets default values
 AmainChar::AmainChar()
@@ -25,20 +27,23 @@ AmainChar::AmainChar()
 
 	FollowCamera->SetRelativeLocation(FVector(10,0,70));
 
-	gun = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("gun"));
+	gun = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("gun"));
 	gun->SetupAttachment(FollowCamera);
 
 	fireLoc = CreateDefaultSubobject<UBoxComponent>(TEXT("fireLoc"));
 	fireLoc->SetupAttachment(FollowCamera);
 
-	gun->SetRelativeLocation(FVector(70, 10, -30));
+	gun->SetRelativeLocation(FVector(80, 10, -30));
 	gun->SetRelativeRotation(FRotator(0, -90, 0));
-	gun->SetRelativeScale3D(FVector(0.4));
+	gun->SetRelativeScale3D(FVector(2.3));
 
 
 	fireLoc->SetRelativeLocation(FVector(90, 10, -30));
 	fireLoc->SetRelativeRotation(FRotator(3, 0, 0));
 	fireLoc->SetRelativeScale3D(FVector(0.5));
+
+	GunIndex = 1;
+	sub_GunIndex = 1;
 
 }
 
@@ -108,6 +113,8 @@ void AmainChar::shoot() {
 	//UE_LOG(LogTemp, Warning, TEXT("x:%f, y:%f, z:%f"), &loc.X, &loc.Y, &loc.Z);
 
 	//FVector FinalVec = FVector(loc.X + (Dir.X*100), loc.Y + (Dir.Y*100), loc.Z + (Dir.Z*100));
+	if (Gun_1_Launch)
+		UGameplayStatics::SpawnSoundAtLocation(this, Gun_1_Launch, RootComponent->GetComponentLocation());
 
 	FVector loc = fireLoc->GetComponentLocation();
 

@@ -5,6 +5,8 @@
 #include "Components/BoxComponent.h"
 #include "DestructibleComponent.h"
 #include "../../ThrowBall.h"
+#include "Kismet/GameplayStatics.h" 	
+#include "Sound/SoundCue.h"
 #include "../../gameInstance/kusaGameInstance.h"
 
 // Sets default values
@@ -48,8 +50,15 @@ void Arewarded_001 ::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 
 	if (ball) {
 		//destr->AddRadialForce(destr->GetComponentLocation(), 1000, -50000, ERadialImpulseFalloff::RIF_Linear, true);
-		destr->ApplyRadiusDamage(5000000.0, destr->GetComponentLocation(), 10000.0, 50000.0, true);
 		if (!broken) {
+			destr->ApplyRadiusDamage(5000000.0, destr->GetComponentLocation(), 10000.0, 50000.0, true);
+
+			if (S_impact)
+				UGameplayStatics::SpawnSoundAtLocation(this, S_impact, RootComponent->GetComponentLocation());
+				
+			if (S_breaking)
+				UGameplayStatics::SpawnSoundAtLocation(this, S_breaking, RootComponent->GetComponentLocation());
+
 			UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
 			if (gameInst) {
 				gameInst->Health += 40;
@@ -63,3 +72,4 @@ void Arewarded_001 ::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 	}
 	
 }
+

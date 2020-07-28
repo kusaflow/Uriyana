@@ -30,6 +30,7 @@ void AThrowBall::Tick(float DeltaTime)
 	UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
 	float playerPosX = gameInst->playerXpos;
 
+	if (timer < 12000)
 	if (ball->GetComponentLocation().X < playerPosX) {
 		if (ball)
 			Destroy();

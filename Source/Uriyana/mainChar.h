@@ -25,9 +25,16 @@ public:
 	class UBoxComponent* fireLoc;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "gun", meta = (AllowPrivateAccess = "true"))
-	class UStaticMeshComponent* gun;
+	class USkeletalMeshComponent* gun;
+
+	UPROPERTY(EditDefaultsOnly, category = "sound")
+	class USoundCue* Gun_1_Launch;
+
 
 	
+	int GunIndex;
+	int sub_GunIndex;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

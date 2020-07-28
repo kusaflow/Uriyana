@@ -23,6 +23,14 @@ public:
 
 	bool broken = false;
 
+	UPROPERTY(EditDefaultsOnly, category = "sound")
+	class USoundCue* S_breaking;
+
+	UPROPERTY(EditDefaultsOnly, category = "sound")
+	class USoundCue* S_impact;
+
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -37,4 +45,5 @@ public:
 		class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 
+	
 };
