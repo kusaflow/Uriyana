@@ -1314,8 +1314,8 @@ void ALevelManager::CreateLevelBlock() {
 				rewardedTimeOut--;
 				breakableTimeout--;
 				if (rewardedTimeOut <= 0) {
-					rewardedTimeOut = (int)FMath::FRandRange(1, 5);
-					RewardToDraw += (int)FMath::FRandRange(1, 5);
+					rewardedTimeOut = (int)FMath::FRandRange(1, 4);
+					RewardToDraw += (int)FMath::FRandRange(1, 4);
 				}
 
 				if (breakableTimeout <= 0) {

@@ -15,6 +15,8 @@
 #include "Components/BoxComponent.h"
 #include "Sound/SoundCue.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Animation/AnimationAsset.h"
+#include "Particles/ParticleSystem.h"
 
 // Sets default values
 AmainChar::AmainChar()
@@ -42,9 +44,6 @@ AmainChar::AmainChar()
 	fireLoc->SetRelativeRotation(FRotator(3, 0, 0));
 	fireLoc->SetRelativeScale3D(FVector(0.5));
 
-	GunIndex = 1;
-	sub_GunIndex = 1;
-
 }
 
 // Called when the game starts or when spawned
@@ -55,6 +54,10 @@ void AmainChar::BeginPlay()
 
 	UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
 	gameInst->Health = 1000;
+
+	gameInst->GunIndex = 1;
+	gameInst->CurrentGunStamina = 0;
+
 	
 }
 
@@ -75,6 +78,10 @@ void AmainChar::Tick(float DeltaTime)
 	if (gameInst->Health <0) {
 		//UGameplayStatics::OpenLevel(this, FName("gameOver"), true);
 	}
+
+	GunIndex = gameInst->GunIndex;
+	CurrentGunStamina = gameInst->CurrentGunStamina;
+
 }
 
 // Called to bind functionality to input
@@ -113,20 +120,34 @@ void AmainChar::shoot() {
 	//UE_LOG(LogTemp, Warning, TEXT("x:%f, y:%f, z:%f"), &loc.X, &loc.Y, &loc.Z);
 
 	//FVector FinalVec = FVector(loc.X + (Dir.X*100), loc.Y + (Dir.Y*100), loc.Z + (Dir.Z*100));
-	if (Gun_1_Launch)
-		UGameplayStatics::SpawnSoundAtLocation(this, Gun_1_Launch, RootComponent->GetComponentLocation());
+	if (GunIndex == 1) {
+		if (Gun_1_Launch)
+			UGameplayStatics::SpawnSoundAtLocation(this, Gun_1_Launch, RootComponent->GetComponentLocation());
+		if (gun1Anim) 
+			gun->PlayAnimation(gun1Anim, false);
+
+		
+	}
 
 	FVector loc = fireLoc->GetComponentLocation();
 
-	AThrowBall* actor;
+	AThrowBall* actor = nullptr;
 	FActorSpawnParameters spawnPara;
 	spawnPara.Owner = this;
-
-	if (ball) {
-		UWorld* world = GetWorld();
-		if (world) {
-			actor = world->SpawnActor<AThrowBall>(ball, loc, FRotator(0), spawnPara);
-			
+	UWorld* world = GetWorld();
+	if (world) {
+		if (G1_ball1 && G1_ball2 && G1_ball3) {
+			if (GunIndex == 1) {
+				if (CurrentGunStamina <= 300) {
+					actor = world->SpawnActor<AThrowBall>(G1_ball1, loc, FRotator(0), spawnPara);
+				}
+				else if (CurrentGunStamina <= 600) {
+					actor = world->SpawnActor<AThrowBall>(G1_ball2, loc, FRotator(0), spawnPara);
+				}
+				else if (CurrentGunStamina <= 900) {
+					actor = world->SpawnActor<AThrowBall>(G1_ball3, loc, FRotator(0), spawnPara);
+				}
+			}
 			FVector forceToBall = fireLoc->GetForwardVector();
 			//4300
 			forceToBall.X *= 3500;

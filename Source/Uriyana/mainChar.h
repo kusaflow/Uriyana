@@ -18,8 +18,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
 
-	UPROPERTY(EditDefaultsOnly, category = "meshes")
-	TSubclassOf<class AThrowBall> ball;
+	UPROPERTY(EditDefaultsOnly, category = "G1_BALLS")
+	TSubclassOf<class AThrowBall> G1_ball1;
+
+	UPROPERTY(EditDefaultsOnly, category = "G1_BALLS")
+	TSubclassOf<class AThrowBall> G1_ball2;
+
+	UPROPERTY(EditDefaultsOnly, category = "G1_BALLS")
+	TSubclassOf<class AThrowBall> G1_ball3;
+
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "gunRelease", meta = (AllowPrivateAccess = "true"))
 	class UBoxComponent* fireLoc;
@@ -31,9 +38,15 @@ public:
 	class USoundCue* Gun_1_Launch;
 
 
+
+	//animations
+	UPROPERTY(EditDefaultsOnly, category = "Animation")
+	class UAnimationAsset* gun1Anim;
+
+
 	
 	int GunIndex;
-	int sub_GunIndex;
+	float CurrentGunStamina;
 
 protected:
 	// Called when the game starts or when spawned

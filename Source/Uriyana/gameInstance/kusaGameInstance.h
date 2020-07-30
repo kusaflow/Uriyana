@@ -26,5 +26,12 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "kusaVar")
 	float WealponPower = 0;
 
+	UPROPERTY(BlueprintReadWrite, Category = "kusaGun")
+	int GunIndex = 0;
+
+	UPROPERTY(BlueprintReadWrite, Category = "kusaGun")
+	float CurrentGunStamina = 0;
+
+
 
 };

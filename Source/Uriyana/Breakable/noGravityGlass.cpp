@@ -28,7 +28,7 @@ AnoGravityGlass::AnoGravityGlass()
 	broken = false;
 	destr->SetEnableGravity(false);
 
-	destr->OnComponentFracture.AddDynamic(this, &AnoGravityGlass :: onFrac);
+	//destr->OnComponentFracture.AddDynamic(this, &AnoGravityGlass :: onFrac);
 
 	basedamage = 5000000.0;
 	impulseRadius = 10000.0;
@@ -55,6 +55,8 @@ void AnoGravityGlass::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 
 	AmainChar* mainCh = Cast<AmainChar>(OtherActor);
+	
+	
 
 	if (mainCh) {
 		if (!broken) {
