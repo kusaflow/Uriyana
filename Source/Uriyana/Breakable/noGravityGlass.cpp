@@ -56,11 +56,32 @@ void AnoGravityGlass::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 
 	AmainChar* mainCh = Cast<AmainChar>(OtherActor);
 	
+	UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
+
+	//hit damage
+	if (gameInst->GunIndex == 1) {
+		if (gameInst->CurrentGunStamina <= 300) {
+			basedamage = 5000000.0;
+			impulseRadius = 10000.0;
+			impulse = 5000.0;
+		}
+		else if (gameInst->CurrentGunStamina <= 600) {
+			basedamage = 5000000.0;
+			impulseRadius = 10000.0;
+			impulse = 30000.0;
+		}
+		else if (gameInst->CurrentGunStamina <= 900) {
+			basedamage = 9000000.0;
+			impulseRadius = 10000.0;
+			impulse = 50000.0;
+		}
+	}
+
+	//---------------------------------
 	
 
 	if (mainCh) {
 		if (!broken) {
-			UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
 
 			if (gameInst) {
 				gameInst->Health -= 100;

@@ -93,6 +93,14 @@ public:
 	TSubclassOf<class AActor> breakableActor;
 
 
+	//power ups=============================================================
+
+	UPROPERTY(EditDefaultsOnly, category = "powerUps")
+	TSubclassOf<class AActor> PU_small;
+
+	UPROPERTY(EditDefaultsOnly, category = "powerUps")
+	TSubclassOf<class AActor> PU_large;
+
 
 
 	int Theme =1;
@@ -139,6 +147,10 @@ public:
 
 	int breakableTimeout;
 	int breakableToDraw;
+
+	int smallPowerUpTimer = 7;
+
+	int BigPowerUpTimer = 10;
 
 
 	int blindOut = 0;

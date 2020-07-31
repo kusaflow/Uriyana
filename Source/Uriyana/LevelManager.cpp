@@ -172,30 +172,32 @@ void ALevelManager::CreateLevelBlock() {
 							blocks.Push(sp);
 						}
 
-						if (sq_floor) {
-							AActor* floor = world->SpawnActor<AActor>(sq_floor, FVector(xpos + 500, 0, -500), FRotator(0), spawnPara);
-							floor->SetActorScale3D(FVector(5, 15, 1));
-							blocks.Push(floor);
-						}
-						///--------------walls
-						if (t1_wall) {
-							Asq_floor* wall1 = world->SpawnActor<Asq_floor>(t1_wall, FVector(xpos + 500, -1200, 500), FRotator(0), spawnPara);
-							wall1->SetActorScale3D(FVector(5, 1, 10));
-							blocks.Push(wall1);
-
-
-							Asq_floor* wall2 = world->SpawnActor<Asq_floor>(t1_wall, FVector(xpos + 500, 1200, 500), FRotator(0), spawnPara);
-							wall2->SetActorScale3D(FVector(5, 1, 10));
-							blocks.Push(wall2);
-
-							Asq_floor* wall3 = world->SpawnActor<Asq_floor>(t1_wall, FVector(xpos + 500, 0, 1000), FRotator(0), spawnPara);
-							wall3->SetActorScale3D(FVector(5, 15, 1));
-							blocks.Push(wall3);
-						}
 						//=====close box
 
 						bool drawGlass = breakableToDraw > 0 ? true : false;
 						if (Theme == 1) {
+
+							if (sq_floor) {
+								AActor* floor = world->SpawnActor<AActor>(sq_floor, FVector(xpos + 500, 0, -500), FRotator(0), spawnPara);
+								floor->SetActorScale3D(FVector(5, 15, 1));
+								blocks.Push(floor);
+							}
+							///--------------walls
+							if (t1_wall) {
+								Asq_floor* wall1 = world->SpawnActor<Asq_floor>(t1_wall, FVector(xpos + 500, -1200, 500), FRotator(0), spawnPara);
+								wall1->SetActorScale3D(FVector(5, 1, 10));
+								blocks.Push(wall1);
+
+
+								Asq_floor* wall2 = world->SpawnActor<Asq_floor>(t1_wall, FVector(xpos + 500, 1200, 500), FRotator(0), spawnPara);
+								wall2->SetActorScale3D(FVector(5, 1, 10));
+								blocks.Push(wall2);
+
+								Asq_floor* wall3 = world->SpawnActor<Asq_floor>(t1_wall, FVector(xpos + 500, 0, 1000), FRotator(0), spawnPara);
+								wall3->SetActorScale3D(FVector(5, 15, 1));
+								blocks.Push(wall3);
+							}
+
 
 							drawGlass = floorType >= 17 ? false : drawGlass;
 
@@ -245,6 +247,24 @@ void ALevelManager::CreateLevelBlock() {
 									blocks.Push(rew);
 									breakableToDraw--;
 								}
+
+								if (!drawGlass) {
+									//powerups
+									//small
+									if (smallPowerUpTimer <= 0) {
+										if (((int)(FMath::FRandRange(1, 100))) % 2 == 0) {
+											AActor* sPU = GetWorld()->SpawnActor<AActor>(PU_small, FVector(xpos + 500, FMath::FRandRange(-900, 900), 600), FRotator(0), spawnPara);
+											blocks.Push(sPU);
+										}
+										smallPowerUpTimer = (int)FMath::FRandRange(2, 5);
+										
+									}
+									//boig
+									if (BigPowerUpTimer <= 0) {
+
+									}
+								}
+
 
 								//normal
 								if (floorType == 1) {
@@ -1322,6 +1342,9 @@ void ALevelManager::CreateLevelBlock() {
 					breakableTimeout = (int)FMath::FRandRange(1, 5);
 					breakableToDraw = (int)FMath::FRandRange(1, 3);
 				}
+
+				smallPowerUpTimer--;
+				BigPowerUpTimer--;
 			}
 			else {
 				//SetTheme
