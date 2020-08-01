@@ -39,5 +39,8 @@ void AThrowBall::Tick(float DeltaTime)
 }
 
 UStaticMeshComponent* AThrowBall :: getMesh() {
-	return ball;
+	if (ball)
+		return ball;
+
+	return nullptr;
 }

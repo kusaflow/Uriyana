@@ -7,6 +7,8 @@
 #include "../ThrowBall.h"
 #include "../gameInstance/kusaGameInstance.h"
 #include "../mainChar.h"
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AnoGravityGlass::AnoGravityGlass()
@@ -60,17 +62,17 @@ void AnoGravityGlass::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 
 	//hit damage
 	if (gameInst->GunIndex == 1) {
-		if (gameInst->CurrentGunStamina <= 300) {
+		if (gameInst->CurrentGunStamina < 500) {
 			basedamage = 5000000.0;
 			impulseRadius = 10000.0;
 			impulse = 5000.0;
 		}
-		else if (gameInst->CurrentGunStamina <= 600) {
+		else if (gameInst->CurrentGunStamina < 1000) {
 			basedamage = 5000000.0;
 			impulseRadius = 10000.0;
 			impulse = 30000.0;
 		}
-		else if (gameInst->CurrentGunStamina <= 900) {
+		else if (gameInst->CurrentGunStamina <= 1100) {
 			basedamage = 9000000.0;
 			impulseRadius = 10000.0;
 			impulse = 50000.0;
@@ -87,6 +89,8 @@ void AnoGravityGlass::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 				gameInst->Health -= 100;
 				gameInst->bGotHit = true;
 				broken = true;
+				if (soundFX)
+					UGameplayStatics::SpawnSoundAtLocation(this, soundFX, RootComponent->GetComponentLocation());
 			}
 		}
 		return;
@@ -102,12 +106,11 @@ void AnoGravityGlass::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 			destr->ApplyRadiusDamage(basedamage, destr->GetComponentLocation(), impulseRadius, impulse, true);
 
 			destr->SetEnableGravity(true);
-
 			
 		}
 	}
 	else {
-		destr->SetEnableGravity(true);
+		//destr->SetEnableGravity(true);
 		broken = true;
 		destr->DestroyComponent(true);
 	}
@@ -117,4 +120,6 @@ void AnoGravityGlass::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 void AnoGravityGlass::onFrac(const FVector& HitPoint, const FVector& HitDirection) {
 	destr->SetEnableGravity(true);
 	broken = true;
+	if (soundFX)
+		UGameplayStatics::SpawnSoundAtLocation(this, soundFX, RootComponent->GetComponentLocation());
 }

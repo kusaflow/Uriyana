@@ -37,6 +37,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, category = "sound")
 	class USoundCue* Gun_1_Launch;
 
+	UPROPERTY(EditDefaultsOnly, category = "sound")
+	class USoundCue* Gun_1_Launch_sifi;
 
 
 	//animations

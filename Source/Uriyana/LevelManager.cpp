@@ -252,7 +252,7 @@ void ALevelManager::CreateLevelBlock() {
 									//powerups
 									//small
 									if (smallPowerUpTimer <= 0) {
-										if (((int)(FMath::FRandRange(1, 100))) % 2 == 0) {
+										if (((int)(FMath::FRandRange(1, 100))) % 1 == 0) {
 											AActor* sPU = GetWorld()->SpawnActor<AActor>(PU_small, FVector(xpos + 500, FMath::FRandRange(-900, 900), 600), FRotator(0), spawnPara);
 											blocks.Push(sPU);
 										}
@@ -260,8 +260,12 @@ void ALevelManager::CreateLevelBlock() {
 										
 									}
 									//boig
-									if (BigPowerUpTimer <= 0) {
-
+									else if (BigPowerUpTimer <= 0) {
+										if (((int)(FMath::FRandRange(1, 100))) % 1  == 0) {
+											AActor* sPU = GetWorld()->SpawnActor<AActor>(PU_large, FVector(xpos + 500, FMath::FRandRange(-900, 900), 600), FRotator(0), spawnPara);
+											blocks.Push(sPU);
+										}
+										BigPowerUpTimer = (int)FMath::FRandRange(2, 5);//(8, 20);
 									}
 								}
 

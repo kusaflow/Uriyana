@@ -121,10 +121,8 @@ void AmainChar::shoot() {
 
 	//FVector FinalVec = FVector(loc.X + (Dir.X*100), loc.Y + (Dir.Y*100), loc.Z + (Dir.Z*100));
 	if (GunIndex == 1) {
-		if (Gun_1_Launch)
-			UGameplayStatics::SpawnSoundAtLocation(this, Gun_1_Launch, RootComponent->GetComponentLocation());
-		if (gun1Anim) 
-			gun->PlayAnimation(gun1Anim, false);
+		
+		
 
 		
 	}
@@ -138,14 +136,27 @@ void AmainChar::shoot() {
 	if (world) {
 		if (G1_ball1 && G1_ball2 && G1_ball3) {
 			if (GunIndex == 1) {
-				if (CurrentGunStamina <= 300) {
+				if (gun1Anim)
+					gun->PlayAnimation(gun1Anim, false);
+
+
+				if (CurrentGunStamina < 500) {
 					actor = world->SpawnActor<AThrowBall>(G1_ball1, loc, FRotator(0), spawnPara);
+
+					if (Gun_1_Launch)
+						UGameplayStatics::SpawnSoundAtLocation(this, Gun_1_Launch, RootComponent->GetComponentLocation());
 				}
-				else if (CurrentGunStamina <= 600) {
+				else if (CurrentGunStamina < 1000) {
 					actor = world->SpawnActor<AThrowBall>(G1_ball2, loc, FRotator(0), spawnPara);
+
+					if (Gun_1_Launch)
+						UGameplayStatics::SpawnSoundAtLocation(this, Gun_1_Launch, RootComponent->GetComponentLocation());
 				}
-				else if (CurrentGunStamina <= 900) {
+				else if (CurrentGunStamina <= 1100) {
 					actor = world->SpawnActor<AThrowBall>(G1_ball3, loc, FRotator(0), spawnPara);
+
+					if (Gun_1_Launch_sifi)
+						UGameplayStatics::SpawnSoundAtLocation(this, Gun_1_Launch_sifi, RootComponent->GetComponentLocation());
 				}
 			}
 			FVector forceToBall = fireLoc->GetForwardVector();
@@ -153,7 +164,8 @@ void AmainChar::shoot() {
 			forceToBall.X *= 3500;
 			forceToBall.Y *= 3500;
 			forceToBall.Z *= 3500;
-			actor->getMesh()->AddImpulse(forceToBall, NAME_None, true);
+			if (actor && actor->getMesh())
+				actor->getMesh()->AddImpulse(forceToBall, NAME_None, true);
 		}
 	}
 

@@ -32,6 +32,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "damage")
 	float impulse = 0;
 
+	UPROPERTY(EditDefaultsOnly, category = "sound")
+	class USoundCue* soundFX;
 
 protected:
 	// Called when the game starts or when spawned
@@ -43,9 +45,11 @@ public:
 
 	UFUNCTION()
 	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
-			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 	UFUNCTION(BlueprintCallable)
 	void onFrac(const FVector& HitPoint, const FVector& HitDirection);
+
+
 
 };
