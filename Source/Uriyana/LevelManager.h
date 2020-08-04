@@ -88,6 +88,21 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, category = "T1_Big_Breakable")
 	TSubclassOf<class AActor> T1_b4;
+	
+	//////======================edible===============================================
+	UPROPERTY(EditDefaultsOnly, category = "edible")
+	TSubclassOf<class AActor> ed_b1;
+
+	//breakable edible ---------------------------------
+	UPROPERTY(EditDefaultsOnly, category = "edible break")
+	TSubclassOf<class AActor> ed_breakable1;
+
+
+
+	///////////////////////edible===========================================
+
+
+
 
 	
 	TSubclassOf<class AActor> breakableActor;
@@ -103,7 +118,7 @@ public:
 
 
 
-	int Theme =1;
+	int Theme =2;
 
 	UPROPERTY(BlueprintReadOnly, Category = "kusavar")
 	int Theme_Duration=20;
