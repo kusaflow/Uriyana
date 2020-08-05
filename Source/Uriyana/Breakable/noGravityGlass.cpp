@@ -16,12 +16,16 @@ AnoGravityGlass::AnoGravityGlass()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	root = CreateDefaultSubobject<UBoxComponent>(TEXT("root"));
+	RootComponent = root;
 
 	destr = CreateDefaultSubobject<UDestructibleComponent>(TEXT("destroy"));
-	RootComponent = destr;
+	destr->SetupAttachment(RootComponent);
 
 	block = CreateDefaultSubobject<UBoxComponent>(TEXT("block"));
-	block->SetupAttachment(RootComponent);
+	block->SetupAttachment(destr);
+
+	root->SetCollisionProfileName("NoCollision");
 
 	block->OnComponentBeginOverlap.AddDynamic(this, &AnoGravityGlass::OnOverlapBegin);
 
@@ -62,20 +66,39 @@ void AnoGravityGlass::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 
 	//hit damage
 	if (gameInst->GunIndex == 1) {
-		if (gameInst->CurrentGunStamina < 500) {
-			basedamage = 5000000.0;
-			impulseRadius = 10000.0;
-			impulse = 5000.0;
+		if (gameInst->Theme == 1) {
+			if (gameInst->CurrentGunStamina < 500) {
+				basedamage = 5000000.0;
+				impulseRadius = 10000.0;
+				impulse = 5000.0;
+			}
+			else if (gameInst->CurrentGunStamina < 1000) {
+				basedamage = 5000000.0;
+				impulseRadius = 10000.0;
+				impulse = 30000.0;
+			}
+			else if (gameInst->CurrentGunStamina <= 1100) {
+				basedamage = 9000000.0;
+				impulseRadius = 10000.0;
+				impulse = 50000.0;
+			}
 		}
-		else if (gameInst->CurrentGunStamina < 1000) {
-			basedamage = 5000000.0;
-			impulseRadius = 10000.0;
-			impulse = 30000.0;
-		}
-		else if (gameInst->CurrentGunStamina <= 1100) {
-			basedamage = 9000000.0;
-			impulseRadius = 10000.0;
-			impulse = 50000.0;
+		else if (gameInst->Theme == 2) {
+			if (gameInst->CurrentGunStamina < 500) {
+				basedamage = 5000000.0;
+				impulseRadius = 10000.0;
+				impulse = 10000.0;
+			}
+			else if (gameInst->CurrentGunStamina < 1000) {
+				basedamage = 5000000.0;
+				impulseRadius = 10000.0;
+				impulse = 90000.0;
+			}
+			else if (gameInst->CurrentGunStamina <= 1100) {
+				basedamage = 9000000.0;
+				impulseRadius = 10000.0;
+				impulse = 500000.0;
+			}
 		}
 	}
 

@@ -82,6 +82,8 @@ void AmainChar::Tick(float DeltaTime)
 	GunIndex = gameInst->GunIndex;
 	CurrentGunStamina = gameInst->CurrentGunStamina;
 
+
+
 }
 
 // Called to bind functionality to input

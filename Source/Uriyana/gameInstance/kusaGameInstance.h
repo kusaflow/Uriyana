@@ -32,6 +32,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "kusaGun")
 	float CurrentGunStamina = 0;
 
+	UPROPERTY(BlueprintReadWrite, Category = "kusavar")
+	int Theme = 0;
+
 
 
 };

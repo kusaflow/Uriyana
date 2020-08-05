@@ -74,6 +74,8 @@ void ALevelManager::Tick(float DeltaTime)
 	UkusaGameInstance* gameInst = Cast<UkusaGameInstance>(GetGameInstance());
 	float playerPosX = gameInst->playerXpos;
 
+	gameInst->Theme = Theme;
+
 	if (playerPosX >= next_Milestone) {
 		UpdateLevel();
 	}
@@ -941,11 +943,22 @@ void ALevelManager::CreateLevelBlock() {
 						
 							//////////////////////////////////////////////////////
 
-							int brNo = (int)FMath::FRandRange(1, 6);
+							int brNo = 5;// (int)FMath::FRandRange(1, 6);
 							//breakable selection
 							if (drawGlass) {
 								if (brNo == 1 && ed_breakable1) {
 									breakableActor = ed_breakable1;
+								}else if(brNo == 2 && ed_breakable2) {
+									breakableActor = ed_breakable2;
+								}
+								else if (brNo == 3 && ed_breakable3) {
+									breakableActor = ed_breakable3;
+								}
+								else if (brNo == 4 && ed_breakable4) {
+									breakableActor = ed_breakable4;
+								}
+								else if (brNo == 5 && ed_breakable5) {
+									breakableActor = ed_breakable5;
 								}
 
 							}
@@ -953,6 +966,17 @@ void ALevelManager::CreateLevelBlock() {
 
 							if (brNo == 1) {
 								zForBreakable = 450;
+							}else if (brNo == 2) {
+								zForBreakable = 400;
+							}
+							else if (brNo == 3) {
+								zForBreakable = 440;
+							}
+							else if (brNo == 4) {
+								zForBreakable = 470;
+							}
+							else if (brNo == 5) {
+								zForBreakable = 460;
 							}
 							///////////////////////////////////////////////////////
 
@@ -1416,7 +1440,7 @@ void ALevelManager::CreateLevelBlock() {
 					if (Theme == 1)
 						breakableTimeout = (int)FMath::FRandRange(1, 5);
 					else if (Theme == 2)
-						breakableTimeout = 1;// (int)FMath::FRandRange(1, 5);
+						breakableTimeout = (int)FMath::FRandRange(1, 5);
 
 					breakableToDraw = (int)FMath::FRandRange(1, 3);
 				}

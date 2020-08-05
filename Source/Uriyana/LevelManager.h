@@ -97,6 +97,35 @@ public:
 	UPROPERTY(EditDefaultsOnly, category = "edible break")
 	TSubclassOf<class AActor> ed_breakable1;
 
+	UPROPERTY(EditDefaultsOnly, category = "edible break")
+	TSubclassOf<class AActor> ed_breakable2;
+
+	UPROPERTY(EditDefaultsOnly, category = "edible break")
+	TSubclassOf<class AActor> ed_breakable3;
+
+	UPROPERTY(EditDefaultsOnly, category = "edible break")
+	TSubclassOf<class AActor> ed_breakable4;
+
+	UPROPERTY(EditDefaultsOnly, category = "edible break")
+	TSubclassOf<class AActor> ed_breakable5;
+
+	UPROPERTY(EditDefaultsOnly, category = "edible break")
+	TSubclassOf<class AActor> ed_breakable6;
+
+	UPROPERTY(EditDefaultsOnly, category = "edible break")
+	TSubclassOf<class AActor> ed_breakable7;
+
+	UPROPERTY(EditDefaultsOnly, category = "edible break")
+	TSubclassOf<class AActor> ed_breakable8;
+
+	UPROPERTY(EditDefaultsOnly, category = "edible break")
+	TSubclassOf<class AActor> ed_breakable9;
+
+	UPROPERTY(EditDefaultsOnly, category = "edible break")
+	TSubclassOf<class AActor> ed_breakable10;
+
+	UPROPERTY(EditDefaultsOnly, category = "edible break")
+	TSubclassOf<class AActor> ed_breakable11;
 
 
 	///////////////////////edible===========================================

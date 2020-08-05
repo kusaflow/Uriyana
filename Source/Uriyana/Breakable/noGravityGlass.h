@@ -16,11 +16,15 @@ public:
 	AnoGravityGlass();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	class UBoxComponent* root;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UBoxComponent* block;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UDestructibleComponent* destr;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "kusaVar", meta = (AllowPrivateAccess = "true"))
 	bool broken = false;
 
 	UPROPERTY(EditAnywhere, Category = "damage")
