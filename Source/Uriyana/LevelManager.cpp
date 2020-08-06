@@ -943,7 +943,7 @@ void ALevelManager::CreateLevelBlock() {
 						
 							//////////////////////////////////////////////////////
 
-							int brNo = 5;// (int)FMath::FRandRange(1, 6);
+							int brNo =  (int)FMath::FRandRange(1, 12);
 							//breakable selection
 							if (drawGlass) {
 								if (brNo == 1 && ed_breakable1) {
@@ -960,6 +960,24 @@ void ALevelManager::CreateLevelBlock() {
 								else if (brNo == 5 && ed_breakable5) {
 									breakableActor = ed_breakable5;
 								}
+								else if (brNo == 6 && ed_breakable6) {
+									breakableActor = ed_breakable6;
+								}
+								else if (brNo == 7 && ed_breakable7) {
+									breakableActor = ed_breakable7;
+								}
+								else if (brNo == 8 && ed_breakable8) {
+									breakableActor = ed_breakable8;
+								}
+								else if (brNo == 9 && ed_breakable9) {
+									breakableActor = ed_breakable9;
+								}
+								else if (brNo == 10 && ed_breakable10) {
+									breakableActor = ed_breakable10;
+								}
+								else if (brNo == 11 && ed_breakable11) {
+									breakableActor = ed_breakable11;
+								}
 
 							}
 							int zForBreakable = 1000;
@@ -967,7 +985,7 @@ void ALevelManager::CreateLevelBlock() {
 							if (brNo == 1) {
 								zForBreakable = 450;
 							}else if (brNo == 2) {
-								zForBreakable = 400;
+								zForBreakable = 430;
 							}
 							else if (brNo == 3) {
 								zForBreakable = 440;
@@ -977,6 +995,24 @@ void ALevelManager::CreateLevelBlock() {
 							}
 							else if (brNo == 5) {
 								zForBreakable = 460;
+							}
+							else if (brNo == 6) {
+								zForBreakable = 500;
+							}
+							else if (brNo == 7) {
+								zForBreakable = 450;
+							}
+							else if (brNo == 8) {
+								zForBreakable = 450;
+							}
+							else if (brNo == 9) {
+								zForBreakable = 450;
+							}
+							else if (brNo == 10) {
+								zForBreakable = 450;
+							}
+							else if (brNo == 11) {
+								zForBreakable = 490;
 							}
 							///////////////////////////////////////////////////////
 
