@@ -35,6 +35,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "kusavar")
 	int Theme = 0;
 
-
+	bool ThemeChanged = false;
 
 };

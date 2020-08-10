@@ -82,6 +82,13 @@ void AmainChar::Tick(float DeltaTime)
 	GunIndex = gameInst->GunIndex;
 	CurrentGunStamina = gameInst->CurrentGunStamina;
 
+	if (gameInst->ThemeChanged) {
+		gameInst->ThemeChanged = false;
+		GetCharacterMovement()->MaxWalkSpeed = 600;
+	}
+	else {
+		GetCharacterMovement()->MaxWalkSpeed += 30 * DeltaTime;
+	}
 
 
 }
@@ -163,9 +170,10 @@ void AmainChar::shoot() {
 			}
 			FVector forceToBall = fireLoc->GetForwardVector();
 			//4300
-			forceToBall.X *= 3500;
-			forceToBall.Y *= 3500;
-			forceToBall.Z *= 3500;
+			float speedOfBullet = 3500 + GetCharacterMovement()->MaxWalkSpeed;
+			forceToBall.X *= speedOfBullet;
+			forceToBall.Y *= speedOfBullet;
+			forceToBall.Z *= speedOfBullet;
 			if (actor && actor->getMesh())
 				actor->getMesh()->AddImpulse(forceToBall, NAME_None, true);
 		}

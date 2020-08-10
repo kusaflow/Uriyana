@@ -83,12 +83,13 @@ void ALevelManager::Tick(float DeltaTime)
 	//UE_LOG(LogTemp, Warning, TEXT("%f"), &Theme_Duration);
 
 	if (themeisOver && blindOut == 0) {
+		
 		while (!LB_array.IsEmpty()) {
 			popBlock();
 		}
 
 		xpos = -50000;
-
+		gameInst->ThemeChanged = true;
 		themeisOver = false;
 		blindOut = 5;
 		APawn* p = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
@@ -1476,7 +1477,7 @@ void ALevelManager::CreateLevelBlock() {
 					if (Theme == 1)
 						breakableTimeout = (int)FMath::FRandRange(1, 5);
 					else if (Theme == 2)
-						breakableTimeout = (int)FMath::FRandRange(1, 5);
+						breakableTimeout = (int)FMath::FRandRange(3, 6);
 
 					breakableToDraw = (int)FMath::FRandRange(1, 3);
 				}
