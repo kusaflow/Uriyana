@@ -87,7 +87,7 @@ void AmainChar::Tick(float DeltaTime)
 		GetCharacterMovement()->MaxWalkSpeed = 600;
 	}
 	else {
-		GetCharacterMovement()->MaxWalkSpeed += 30 * DeltaTime;
+		GetCharacterMovement()->MaxWalkSpeed += 10 * DeltaTime;
 	}
 
 

@@ -86,17 +86,17 @@ void AnoGravityGlass::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 		else if (gameInst->Theme == 2) {
 			if (gameInst->CurrentGunStamina < 500) {
 				basedamage = 5000000.0;
-				impulseRadius = 10000.0;
-				impulse = 10000.0;
+				impulseRadius = 50000.0;
+				impulse = 90000.0;
 			}
 			else if (gameInst->CurrentGunStamina < 1000) {
 				basedamage = 5000000.0;
-				impulseRadius = 10000.0;
-				impulse = 90000.0;
+				impulseRadius = 50000.0;
+				impulse = 390000.0;
 			}
 			else if (gameInst->CurrentGunStamina <= 1100) {
 				basedamage = 9000000.0;
-				impulseRadius = 10000.0;
+				impulseRadius = 50000.0;
 				impulse = 500000.0;
 			}
 		}

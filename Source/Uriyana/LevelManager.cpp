@@ -1487,7 +1487,7 @@ void ALevelManager::CreateLevelBlock() {
 			}
 			else {
 				//SetTheme
-				Theme = 2;
+				Theme = 1;
 				themeisOver = true;
 				blindOut = 10;
 			}
